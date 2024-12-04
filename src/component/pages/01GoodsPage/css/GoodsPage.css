@@ -1,0 +1,153 @@
+.GoodsBody{
+    margin: 4vh 3vw 0 3vw;
+}
+
+.GBMain{
+    display: flex;
+}
+
+.GBMPic img{
+    max-width: 50vw;
+}
+
+.GBMText{
+    margin-left: 2.5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.GBMTextTitle{
+    font-size: 2.8vw;
+    line-height: 2.8vw;
+    font-weight: bold;
+}
+
+.GBMTextPrice{
+    font-size: 2.5vw;
+    line-height: 2.5vw;
+    font-weight: bold;
+}
+
+.GBMTextNumberTag{
+    margin-top: 1.7vw;
+    font-size: 1.1vw;
+    line-height: 1.1vw;
+}
+
+.GBMTextNum{
+    display: flex;
+    width: 10vw;
+    height: 3.3vw;
+    text-align: center;
+}
+
+.GBMTextNum button{
+    border: none;
+    background-color: #D7D7D7;
+    height: 3.5vw;
+    width: 3.3vw;
+    padding: 0;
+}
+
+.GBMTNumMinus{
+    flex: 1;
+    width: 3.3vw;
+    font-size: 3vw;
+    line-height: 3vw;
+    background-color: #D7D7D7;
+}
+
+.GBMTNumNumber{
+    flex: 1;
+    width: 3.4vw;
+    font-size: 2vw;
+    line-height: 3.3vw;
+    background-color: white;
+}
+
+.GBMTNumPlus{
+    flex: 1;
+    width: 3.3vw;
+    font-size: 3vw;
+    line-height: 3vw;
+    background-color: #D7D7D7;
+}
+
+.GBMTextIntro{
+    margin-top: 2.3vw;
+    font-size: 1.8vw;
+    line-height: 3vw;
+}
+
+.GBSpice{
+    margin-top: 6vh;
+}
+
+.GBSpiceTitle{
+    margin-left: 1.5vw;
+    font-size: 2vw;
+    line-height: 2vw;
+}
+
+.GBSpiceLine{
+    margin: 15px 0px;
+    height: 2px;
+    background: #333;
+    background-image: linear-gradient(to right, #888888, #000000, #888888);
+}
+
+.GBSpiceChoice{
+    display: flex;
+}
+
+.GBSChoiceYes{
+    margin-left: 2.5vw;
+    font-size: 2vw;
+    line-height: 2vw;
+}
+
+.GBSChoiceNo{
+    margin-left: 1.5vw;
+    font-size: 2vw;
+    line-height: 2vw;
+}
+
+/* 隐藏默认的 radio 按钮 */
+.square-radio {
+    appearance: none; /* 清除默认样式 */
+    -webkit-appearance: none; /* 兼容 Safari */
+    width: 2vw; /* 按钮宽度 */
+    height: 2vw; /* 按钮高度 */
+    border: 0.15vw solid #000; /* 边框样式 */
+    border-radius: 0.2vw; /* 圆角调整为方形 */
+    outline: none; /* 移除选中外框 */
+    cursor: pointer;
+    position: relative;
+    margin-right: 0.8vw;
+}
+
+/* 设置选中状态的样式 */
+.square-radio:checked {
+    background-color: #000; /* 选中状态的背景颜色 */
+    border-color: #000; /* 选中状态的边框颜色 */
+}
+
+/* 添加视觉效果：聚焦时 */
+.square-radio:focus {
+    box-shadow: 0 0 0.2vw #343434; /* 聚焦高亮 */
+}
+
+.GBAddToCart{
+    margin-top: 10vw;
+    width: 100%;
+    font-size: 2.5vw;
+    line-height: 2.5vw;
+    color: #AE6806;
+    font-weight: bold;
+    background-color: white;
+    border: 0.22vw solid #AE6806; 
+    border-radius: 1vw; 
+    padding: 1vw;
+
+}

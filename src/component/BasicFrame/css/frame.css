@@ -1,0 +1,131 @@
+
+body{
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+}   
+
+.BottomBarAreaCss{
+    height: 200px;
+    width: 100%;
+    background-color: #FBD5A0;
+    position: absolute;
+    bottom: 0;
+    float: inline-end;
+    z-index: 1;
+}
+
+
+.BottomText{
+    font-size: 14px;
+    padding-top:15px;
+    padding-bottom: 15px;
+}
+
+.BText_Title{
+    color: #743C00;
+    font-size: 40px;
+    font-weight: 900;
+}
+
+.BText_content{
+    color: #563201;
+    font-size: 20px;
+}
+
+.BottomLogo{
+    position: relative;
+    height: 150px;
+}
+
+.TopLogo{
+    position: relative;
+    height: 60px;
+}
+
+.TopBarListCss{
+    background-color:white;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    top: 0px;
+    width: 100%;
+    margin: 0 auto;
+    border: solid black 2px ;
+    box-shadow: 0 1px 5px black;
+}
+
+.TopBarTextRightCss{
+    display: flex;
+    justify-content: flex-end;
+
+}
+
+/* .TopBarTextLeftCss{
+
+}  */
+
+
+.RightCss{
+    font-size: 22px;
+    color:black;
+    height: 60px; /* 确保容器有足够的高度 */
+    line-height: 60px; /* 将行高设置为容器高度 */
+    font-weight: bold;
+    padding-top:7px;
+    padding-bottom: 7px;
+    padding-right: 20px;
+    position: relative;
+    display: flex;
+}
+
+.RightCss a{
+    text-decoration: none;
+    color: inherit;
+}
+
+.TopBarTextLeftCss ul{
+    padding-top:7px;
+    padding-bottom: 7px;
+    display: flex;
+    list-style-type:none;
+    margin: 0 auto;
+    
+}
+
+.TopBarTextLeftCss li{
+    padding-right: 20px;
+
+}
+
+.TopBarTextLeftCss a{
+    direction: none;
+    text-decoration: none;
+    color: #743C00;
+}
+
+.TBText_Title{
+    font-size: 36px;
+    height: 60px; /* 确保容器有足够的高度 */
+    line-height: 60px; /* 将行高设置为容器高度 */
+    color: #743C00;
+    font-weight: 900;
+}
+
+.RightCss :hover{
+    color: rgb(84, 49, 49);
+}
+
+.CartCss{
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    
+}
+.CartCss .btn{
+    border-radius: 0; /* 将按钮的圆角设置为 0 */
+    border: none;
+    margin: 0px;
+    height: 100%;
+    width: 80px;
+}

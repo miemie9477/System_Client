@@ -1,0 +1,35 @@
+.MenuItems{
+    display: flex;
+    margin: 0 0 5vh 2vw;
+}
+
+.MenuItems a{
+    text-decoration: none;
+    color: black;
+}
+
+.MIPic img{
+    max-width: 22vw;
+}
+
+.MIText{
+    display: flex;
+    flex-direction: column;
+}
+
+.MIText{
+    margin-left: 2.5vw;
+}
+
+.MITextName{
+    font-size: 2.5vw;
+    line-height: 2.5vw;
+    margin-top: 0;
+    font-weight: bold;
+}
+
+.MITextPrice{
+    font-size: 2.5vw;
+    line-height: 2.5vw; /* 与字体大小相等 */
+    margin-top: 1.5vw;
+}

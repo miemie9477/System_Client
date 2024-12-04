@@ -1,0 +1,107 @@
+.loginBoxCss{
+    position: relative;
+    height: 1200px;
+    display: flex;
+    justify-content: center;
+}
+
+.loginContent{
+    position: relative;
+    display: inline;
+    height: 400px;
+    width: 500px;
+    border: 1px solid rgb(121, 121, 121);
+    margin-top: 70px;
+    margin-bottom: 50px;
+}
+.loginForm{
+    padding:0px 50px 20px 50px;
+}
+.loginForm .btn{
+    border-radius: 0;
+    background-color: #563201;
+    border-color: #563201;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.loginForm p{
+    color: red;
+    text-align: right;
+    margin: 0;
+    
+}
+
+.loginForm input{
+    border: rgb(205, 205, 205) 1px solid;
+    border-radius: 5px;
+    width: 100%;
+    height: 35px;
+    margin: 5px 0px;
+}
+
+.loginForm input:focus{
+    outline: #c2dbfe 4px solid;
+    border: #86b7fe 1px solid;
+}
+
+.registerLink{
+    font-size: 14px;
+    margin-top: 10px;
+    
+}
+
+.registerLink a{
+    padding-left: 5px;
+    color: inherit;
+}
+
+.registerContent{
+    margin-top: 50px;
+}
+
+.registerForm{
+    
+}
+
+.registerForm p{
+    color: red;
+    text-align: right;
+    margin: 0;
+    
+}
+
+.registerForm input:not(.registerSex input){
+    border: rgb(205, 205, 205) 1px solid;
+    border-radius: 5px;
+    width: 100%;
+    height: 35px;
+    margin: 5px 0px;
+}
+
+.registerForm input:focus:not(.registerSex input){
+    outline: #c2dbfe 4px solid;
+    border: #86b7fe 1px solid;
+}
+
+.registerSex{
+    display: flex;
+    height: 75px;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.registerSex input{
+    border: rgb(205, 205, 205) 1px solid;
+    width: 35px;
+    height: 35px;
+}
+
+.registerSexdecoration{
+    display: flex;
+    width: 50%;
+    justify-content: space-around;
+}
+

@@ -1,0 +1,217 @@
+.CartBody{
+    margin: 4vh 3vw 0 3vw;
+}
+
+.CartBody p{
+    color: red;
+    text-align: right;
+    font-size: 1.4vw;
+    line-height: 1.4vw;
+    font-weight: bold;
+    margin-top: 0.5vw;
+}
+
+.CartDetail{
+    display: flex;
+    flex-direction: column;
+}
+
+.CDTitle{
+    font-size: 1.9vw;
+    line-height: 1.9vw;
+    font-weight: bold;
+}
+
+.CDTitleLine{
+    margin: 0.8vw 0px;
+    height: 2px;
+    background: #333;
+    background-image: linear-gradient(to right, #888888, #000000, #888888);
+}
+
+.CDGoods{
+    font-size: 1.6vw;
+    line-height: 1.6vw;
+    margin-left: 1.5vw;
+    font-weight: bold;
+}
+
+.CDSpice{
+    font-size: 1.4vw;
+    line-height: 1.4vw;
+    font-weight: bold;
+    color: #5F5F5F;
+    margin-left: 2.2vw;
+    margin-top: 0.7vw;
+}
+
+.CDAdjustNum{
+    display: flex;
+    justify-content: end;
+    text-align: center;
+}
+
+.CDANCrashcan{
+    margin-right: 1vw;
+    line-height: 1.95vw;
+}
+
+.CDANCrashcanIcon{
+    font-size: 1.7vw;
+}
+
+.CDAdjustNum button {
+    border: none;
+    height: 1.8vw;
+    width: 1.8vw;
+    padding: 0;
+}
+
+.CDANCrashcan button{
+    background-color: white;
+}
+
+.CDANMinus button, .CDANPlus button{
+    background-color: #D7D7D7;
+}
+
+.CDANMinus{
+    width: 1.8vw;
+    font-size: 1.8vw;
+    line-height: 1.95vw;
+    background-color: #D7D7D7;
+}
+
+.CDANNum{
+    width: 1.8vw;
+    font-size: 1.5vw;
+    line-height: 1.95vw;
+    background-color: white;
+}
+
+.CDANPlus{
+    width: 1.8vw;
+    font-size: 1.8vw;
+    line-height: 1.95vw;
+    background-color: #D7D7D7;
+    margin-right: 1vw;
+}
+
+.CDANPrice{
+    font-size: 1.75vw;
+    line-height: 1.95vw;
+    font-weight: bold;
+}
+
+.CDGoodsLine{
+    margin: 0.8vw auto;
+    height: 2px;
+    width: 96%;
+    background: #ffffff;
+    background-image: linear-gradient(to right, #939393, #636363, #939393);
+}
+
+.CDSum{
+    margin-top: 1.5vw;
+    display: flex;
+    justify-content: space-between;
+}
+
+.CDSumTitle{
+    font-size: 1.9vw;
+    line-height: 1.9vw;
+    font-weight: bold;
+}
+
+.CDSumPrice{
+    font-size: 1.9vw;
+    line-height: 1.9vw;
+    font-weight: bold;
+}
+
+.CDRemarkTitle{
+    font-size: 1.6vw;
+    line-height: 1.6vw;
+    font-weight: bold;
+    color: #5F5F5F;
+    margin-top: 1.5vw;
+}
+
+.CDRemark textarea{
+    border: rgb(205, 205, 205) 0.1vw solid;
+    border-radius: 1vw;
+    width: 100%;
+    height: 160px;
+    font-size: 1.4vw;
+    line-height: 1.4vw;
+    font-weight: bold;
+    margin: 0.5vw auto 0.1vw auto;
+    padding: 1vw 1.6vw;
+}
+
+.CDRemark textarea:focus{
+    outline: #c2dbfe 0.27vw solid;
+    border: #86b7fe 0.1vw solid;
+}
+
+
+.CartOrdererDetail{
+    display: flex;
+    flex-direction: column;
+    margin-top: 3.5vw;
+}
+
+.CODTitle{
+    font-size: 1.9vw;
+    line-height: 1.9vw;
+    font-weight: bold;
+}
+
+.CODLine{
+    margin: 0.8vw 0 0 0;
+    height: 2px;
+    background: #333;
+    background-image: linear-gradient(to right, #888888, #000000, #888888);
+}
+
+.CartOrdererDetail input{
+    border: rgb(205, 205, 205) 0.1vw solid;
+    border-radius: 1vw;
+    width: 100%;
+    font-size: 1.4vw;
+    line-height: 1.4vw;
+    font-weight: bold;
+    margin: 0 auto;
+    padding: 1vw 1.6vw;
+    height: 3.5vw;
+}
+
+.CartOrdererDetail input:focus{
+    outline: #c2dbfe 0.2vw solid;
+    border: #86b7fe 0.1vw solid;
+}
+
+.CODName{
+    margin-top: 0.8vw;
+}
+
+.CODPhone{
+    margin-top: 1vw;
+}
+
+.CODPayment{
+    margin-top: 2.5vw;
+}
+
+.CartSubmit{
+    margin-top: 10vw;
+    width: 100%;
+    font-size: 2.5vw;
+    line-height: 2.5vw;
+    color: white;
+    font-weight: bold;
+    background-color: #FF9E17;
+    border: none; 
+    border-radius: 1vw; 
+    padding: 1vw;
+}

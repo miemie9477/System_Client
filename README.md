@@ -1,3 +1,27 @@
+12/4 memo:<br/>
+* add library axios
+* 把商品圖片用商品編號(pNo)命名(叫葉佐全用)，並存在*menu*的**/pic*底下，*MenuPage.js* img部分(第53行)改src
+* pNo傳入GoodPage的部分我用好了，商品詳細介紹再map到畫面上
+* *GoodBody.js* 下面辣度選項可以選但沒顯示選擇(只有預設看的到)
+* 記得補上 **< 上一頁** 按鈕
+* 購物車商品已匯入，一樣map到畫面上
+* 店家資訊我請張士宸設計，你再問他
+
+================<br/>
+* 菜單已匯入(圖片要改)
+* 商品資訊已匯入(內容& 圖片要改)
+
+## Library
+> React.js
+> React.bootstrap
+> react-router-dom (npm install react-router-dom) 
+> npm install react-icons
+> npm install js-cookie
+> npm install react-hook-form
+> npm install axios
+
+<hr>
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
