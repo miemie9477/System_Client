@@ -6,7 +6,7 @@ body{
 }   
 
 .BottomBarAreaCss{
-    height: 200px;
+    height: 11.5vw;
     width: 100%;
     background-color: #FBD5A0;
     position: absolute;
@@ -17,30 +17,32 @@ body{
 
 
 .BottomText{
-    font-size: 14px;
-    padding-top:15px;
-    padding-bottom: 15px;
+    font-size: 1.85vw;
+    line-height: 1.85vw;
+    padding-top:1.5vw;
 }
 
 .BText_Title{
     color: #743C00;
-    font-size: 40px;
+    font-size: 2.3vw;
+    line-height: 2.3vw;
     font-weight: 900;
 }
 
 .BText_content{
     color: #563201;
-    font-size: 20px;
+    font-size: 1.25vw;
+    line-height: 1.25vw;
+    margin-top: 0.5vw;
 }
 
 .BottomLogo{
-    position: relative;
-    height: 150px;
+    height: 8vw;
 }
 
 .TopLogo{
     position: relative;
-    height: 60px;
+    height: 3.4vw;
 }
 
 .TopBarListCss{
@@ -51,8 +53,9 @@ body{
     top: 0px;
     width: 100%;
     margin: 0 auto;
-    border: solid black 2px ;
-    box-shadow: 0 1px 5px black;
+    border: solid black 0.15vw ;
+    box-shadow: 0 0.05vw 0.4vw black;
+    height: 4.45vw;
 }
 
 .TopBarTextRightCss{
@@ -67,16 +70,17 @@ body{
 
 
 .RightCss{
-    font-size: 22px;
+    font-size: 1.25vw;
+    line-height: 1.25vw;
+    height: 2.05vw; /* 确保容器有足够的高度 */
     color:black;
-    height: 60px; /* 确保容器有足够的高度 */
-    line-height: 60px; /* 将行高设置为容器高度 */
     font-weight: bold;
-    padding-top:7px;
-    padding-bottom: 7px;
-    padding-right: 20px;
+    padding-top:0.4vw;
+    padding-bottom: 0.4vw;
+    padding-right: 1.15vw;
     position: relative;
     display: flex;
+    align-self: center; 
 }
 
 .RightCss a{
@@ -85,16 +89,17 @@ body{
 }
 
 .TopBarTextLeftCss ul{
-    padding-top:7px;
-    padding-bottom: 7px;
+    padding-top:0.4vw;
+    padding-bottom: 0.4vw;
     display: flex;
     list-style-type:none;
-    margin: 0 auto;
+    margin:auto;
+    align-items: center;
     
 }
 
 .TopBarTextLeftCss li{
-    padding-right: 20px;
+    padding-right: 1.15vw;
 
 }
 
@@ -105,9 +110,9 @@ body{
 }
 
 .TBText_Title{
-    font-size: 36px;
-    height: 60px; /* 确保容器有足够的高度 */
-    line-height: 60px; /* 将行高设置为容器高度 */
+    font-size: 2.05vw;
+    line-height: 2.05vw;
+    height: 2.05vw;
     color: #743C00;
     font-weight: 900;
 }
@@ -125,7 +130,6 @@ body{
 .CartCss .btn{
     border-radius: 0; /* 将按钮的圆角设置为 0 */
     border: none;
-    margin: 0px;
     height: 100%;
-    width: 80px;
+    width: 4.5vw;
 }

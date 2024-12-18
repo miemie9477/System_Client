@@ -3,27 +3,56 @@ import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { FaTrashCan } from "react-icons/fa6";
 import { Button } from "react-bootstrap";
+import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { useForm } from 'react-hook-form';
+import { NavLink } from "react-router-dom";
 import axios from "axios";
 
-var fetchCartData;
+var fetchCartData, modifyAmount;
 
 const CartBody = () => {
 
-    var [CartItem, setCartItem] = useState({});
+    const navigate = useNavigate();
+    var [CartItem, setCartItem] = useState([{
+        tId: "",
+        pNo: "",
+        pName: "",
+        amount: "",
+        cSpicy: "",
+        cTotal: "",
+        unitPrice:""
+    }]);
 
     useEffect(() =>{
         fetchCartData();
     }, [])
-    console.log("最新的 CartItem:", CartItem);
+    
     
     fetchCartData = async ()=>{
+        const checkCart = `${process.env.REACT_APP_API_URL}/setCookie/createTId`;
+        const checkCartResponse = await axios.get(checkCart,{ withCredentials: true });
+        console.log(checkCartResponse.data);
+        
         const url = `${process.env.REACT_APP_API_URL}/cart/checkCart`;
         await axios.get(url, {withCredentials: true})
         .then(
-            response =>{
+            response => {
                 console.log(response.data);
-                setCartItem(response.data);
+                const cartItems = response.data.map(item => ({
+                    tId: item.tId,
+                    pNo: item.pNo,
+                    pName: item.pName,
+                    amount: item.amount,
+                    cTotal: item.cTotal,
+                    cSpicy: item.cSpicy,
+                    unitPrice: item.cTotal / item.amount, // 計算單價
+                }));
+            
+                setCartItem(cartItems); // 將處理好的陣列存入狀態
+                if(response.data.length < 1){
+                    alert("購物車為空!");
+                    navigate('/');
+                }
             }
         )
         .catch(
@@ -33,20 +62,57 @@ const CartBody = () => {
         )
     };
 
+    modifyAmount = (info) =>{
+        const url = `${process.env.REACT_APP_API_URL}/cart/modifyAmount`;
+        axios.post(url, {info}, {withCredentials: true})
+        .then(
+            response =>{
+                console.log(response.data);
+                if(response.data){
+                    fetchCartData();
+                }
+            }
+        )
+        .catch(
+            error =>{
+                console.log(error);
+            }
+        )
+    }
+    
+    console.log("最新的 CartItem:", CartItem);
+
     const [Cart_num, setCart_num] = useState(1);
-    const Cart_Minus = () =>{
-        if(Cart_num>1) setCart_num(Cart_num - 1)
+
+    const Cart_Minus = (pNo , unitPrice) =>{
+        if(Cart_num>1) {
+            setCart_num(Cart_num - 1);
+            const info={
+                pNo: pNo,
+                amount: Cart_num,
+                cTotal: Cart_num * unitPrice
+            }
+            modifyAmount(info);
+        }
         else setCart_num(1)
     }
 
-    const Cart_Add = () =>{
+    const Cart_Add = (pNo, unitPrice) =>{
         setCart_num(Cart_num + 1)
+        const info={
+            pNo: pNo,
+            amount: Cart_num,
+            cTotal: Cart_num * unitPrice
+        }
+        modifyAmount(info);
+        
     }
 
-    const Discard = () =>{
+
+    const Discard = (pNo) =>{
         const url = `${process.env.REACT_APP_API_URL}/cart/discard`
 
-        axios.post(url, CartItem.pNo)
+        axios.post(url, pNo)
         .then(
             response =>{
                 console.log(response);
@@ -64,27 +130,33 @@ const CartBody = () => {
     });
 
     const onSubmit = (data) => {
-        console.log("驗證成功",data);
-        // 这里可以添加你希望在表单验证成功后执行的代码
+        const total = CartItem.reduce((sum, item) => sum + item.cTotal, 0);
+        console.log("總金額:", total); 
+        navigate('/CartPage/TransPage')
         
     }
     
 
     return(
         <div className="CartBody">
+            <div className='CBPrePage'>
+                <NavLink to="/"><div className='CBPPArrow'><MdOutlineArrowBackIosNew style={{fontSize:"2.2vw", color:"#E08F50"}}/></div></NavLink>
+                <NavLink to="/"><div className='CBPPText'>上一頁</div></NavLink>
+            </div>
             <form name="CartForm" onSubmit={handleSubmit(onSubmit)}>
                 <div className="CartDetail">
                     <div className="CDTitle">購物車資訊</div>
                     <div className="CDTitleLine"></div>
+                    
                     <div className="CDGoods">香雞排</div>
                     <div className="CDSpice">不辣</div>
-                    <div className="CDAdjustNum">
-                        <div className="CDANCrashcan"><button onClick={Discard}><FaTrashCan className="CDANCrashcanIcon"/></button></div>
-                        <div className="CDANMinus"><button onClick={Cart_Minus}>−</button></div>
-                        <div className="CDANNum">{Cart_num}</div>
-                        <div className="CDANPlus"><button onClick={Cart_Add}>+</button></div>
-                        <div className="CDANPrice">$ {Cart_num*UnitPrice}</div>
-                    </div>
+                        <div className="CDAdjustNum">
+                            <div className="CDANCrashcan"><button onClick={Discard}><FaTrashCan className="CDANCrashcanIcon"/></button></div>
+                            <div className="CDANMinus"><button onClick={Cart_Minus}>−</button></div>
+                            <div className="CDANNum">{Cart_num}</div>
+                            <div className="CDANPlus"><button onClick={Cart_Add}>+</button></div>
+                            <div className="CDANPrice">$ {Cart_num*UnitPrice}</div>
+                        </div>
                     <div className="CDGoodsLine"></div>
                     <div className="CDSum">
                         <div className="CDSumTitle">小計</div>

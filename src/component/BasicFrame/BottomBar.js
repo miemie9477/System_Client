@@ -47,7 +47,7 @@ const BottomBar = () =>{
                         <Col>
                             <NavLink to="/" style={{display:"flex",justifyContent:"center"}}><img src={logo} alt="logo" className="BottomLogo"/></NavLink>
                         </Col>
-                        <Col>
+                        <Col style={{marginTop:"0.2vw"}}>
                             <div className="BText_Title">就是炸 炸物專賣店</div>
                             <div className="BText_content">店家地址: 高雄市苓雅區永昌街66號</div>
                             <div className="BText_content">聯絡電話: 0958310393</div>

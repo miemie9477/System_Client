@@ -2,12 +2,29 @@
     margin: 4vh 3vw 0 3vw;
 }
 
+.GBPrePage{
+    display: flex;
+    margin-bottom: 2vw;
+}
+
+.GBPrePage a{
+    text-decoration: none;
+    color: black;
+}
+
+.GBPPText{
+    font-size: 2vw;
+    line-height: 2vw;
+    font-weight: bold;
+    margin-left: 0.5vw;
+}
+
 .GBMain{
     display: flex;
 }
 
 .GBMPic img{
-    max-width: 50vw;
+    max-height: 25vw;
 }
 
 .GBMText{

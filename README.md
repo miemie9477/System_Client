@@ -1,15 +1,30 @@
-12/4 memo:<br/>
-* add library axios
-* 把商品圖片用商品編號(pNo)命名(叫葉佐全用)，並存在*menu*的**/pic*底下，*MenuPage.js* img部分(第53行)改src
-* pNo傳入GoodPage的部分我用好了，商品詳細介紹再map到畫面上
-* *GoodBody.js* 下面辣度選項可以選但沒顯示選擇(只有預設看的到)
-* 記得補上 **< 上一頁** 按鈕
-* 購物車商品已匯入，一樣map到畫面上
-* 店家資訊我請張士宸設計，你再問他
+# 12/18 memo
+1.  *CartPage.js* <br/>
+    [ ] 購物車頁面(*CartBody.js* )已回傳購物車商品，要放上畫面<br/>
+2. *AllOrdersBody.js* <br/>
+    [ ] 把明細放到底下<br/>
+    [ ] 小計(*sum*)要改狀態<br/>
+    > 我把**所有backend底下表格map的部分**，把id改成orderNum<br/>
+3. *AwaitPaymentBody.js*<br/>
+    [ ] 底下明細expandrows要放detail<br/>
+    [ ] 小計(*sum*)要改狀態<br/>
+    [x] **待付款**的訂單，**後端**只會回傳*payState=0 & tState=0*的訂單，所以只要做 encoding就好<br/>
+    > 執行*PaymentHandler()* 重新呼叫一次*getRows()*(從後端提取已修改的*rows*)，畫面重新渲染訂單資料(rows)，不用再改狀態<br/>
+4. *AwaitDeliveryPage.js*<br/>
+    [ ] 底下明細expandrows要放detail<br/>
+    [ ] 小計(*sum*)要改狀態<br/>
+    [x] **待出餐**的訂單，**後端**只會回傳*payState=1 & tState=0*的訂單，所以只要做 encoding就好<br/>
+    > 執行*DeliveryHandler()* 重新呼叫一次*getRows()*(從後端提取已修改的*rows*)，畫面重新渲染訂單資料(rows)，不用再改狀態<br/>
+5. *DonePage.js*<br/>
+    [ ] 底下明細expandrows要放detail<br/>
+    [ ] 小計(*sum*)要改狀態<br/>
+    [x] **待出餐**的訂單，**後端**只會回傳*payState=1 & tState=0*的訂單，所以只要做 encoding就好<br/>
+    > 執行*RefundHandler()* 重新呼叫一次*getRows()*(從後端提取已修改的*rows*)，畫面重新渲染訂單資料(rows)，不用再改狀態
+6. *LoginBox.js* <br/>
+    [ ] 已完成,登入狀態驗證<br/>
+7. 新增 *CheckMember* & *CheckMenu*資料夾，API已寫入(沒debug過)有問題再跟我說<br/>
 
 ================<br/>
-* 菜單已匯入(圖片要改)
-* 商品資訊已匯入(內容& 圖片要改)
 
 ## Library
 > React.js

@@ -18,13 +18,31 @@ const LoginBox = () =>{
     const onSubmit = (data) => {
         
         console.log(data);
-
-        const url = 'http://localhost:3001/login/verify';
+        const url = `${process.env.REACT_APP_API_URL}/backend/login`;
         const info = {
-            mAccount : data.inputAccount,
-            mPwd: data.inputPassword
+            account : data.inputAccount,
+            pwd: data.inputPassword
         }
-        
+        axios.post(url, info)
+        .then(
+            response=>{           
+                console.log(response.data)
+                if(response.data.length > 0){
+                    alert('管理員登入');
+                    navigate('/AllOrdersPage')
+                }
+                else{
+                    setError("inputPassword",{type:"custom", message:"帳號或密碼錯誤"})
+                    // alert("登入失敗");
+                }
+            }
+        ).catch(
+            error =>{
+                console.log(error);
+                alert("伺服器崩潰，等待回應");
+                throw error;
+            }
+        )
     }
 
     return(
@@ -44,9 +62,6 @@ const LoginBox = () =>{
                         {!!errors.inputPassword && <p>{errors.inputPassword.message.toString() || "請輸入密碼"}</p> }
                         
                         <Button variant="danger"  type="submit"  >登入</Button>
-                        <div className="registerLink">
-                            新增後臺帳號:<NavLink to="/RegisterPage">點我註冊</NavLink>
-                        </div>
                     </div>
                 </form>
             </div>

@@ -1,5 +1,5 @@
 import "./css/MenuPage.css"
-import Food from "./pic/Food.jpg"
+import Food from "./pic/a0002.jpg"
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -47,10 +47,12 @@ const MenuItems = ({pNo}) => {
         // </div>
         <div className="MenuItemsContainer">
         {productInfo.map((product) => (
+            
+
             <div className="MenuItems" style={FixStyle} key={product.pNo}>
                 <div className="MIPic">
                     <NavLink to={`/GoodsPage?pNo=${product.pNo}`}>
-                    <img src={Food} alt={product.pName} />
+                    <img src={require(`./pic/${product.pNo}.jpg`)} alt={product.pName} />
                     </NavLink>
                 </div>
                 <div className="MIText">

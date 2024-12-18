@@ -11,6 +11,23 @@
     margin-top: 0.5vw;
 }
 
+.CBPrePage{
+    display: flex;
+    margin-bottom: 2vw;
+}
+
+.CBPrePage a{
+    text-decoration: none;
+    color: black;
+}
+
+.CBPPText{
+    font-size: 2vw;
+    line-height: 2vw;
+    font-weight: bold;
+    margin-left: 0.5vw;
+}
+
 .CartDetail{
     display: flex;
     flex-direction: column;

@@ -10,6 +10,9 @@ import { PiShoppingCartSimpleFill } from "react-icons/pi";
 import MenuPage from "../pages/00MenuPage/MenuPage";
 
 const TopBarText = () => {
+
+    
+
     return(
         <>
             <div className="TopBarListCss">
@@ -33,7 +36,7 @@ const TopBarText = () => {
                         
                     </div>
                     <div className="CartCss">
-                        <NavLink to="/CartPage"><Button variant="outline-dark"><PiShoppingCartSimpleFill size={35}/></Button></NavLink>
+                        <NavLink to="/CartPage"><Button variant="outline-dark"><PiShoppingCartSimpleFill style={{fontSize:"2vw"}}/></Button></NavLink>
                     </div>
                 </div>
             </div>
