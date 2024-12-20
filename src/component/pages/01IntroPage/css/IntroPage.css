@@ -1,0 +1,50 @@
+.IntroBody{
+    margin: 6vh 3vw 0 3vw;
+    padding: 1vw 5vw;
+}
+
+.IBTitle{
+    font-size: 2.4vw;
+    line-height: 2.4vw;
+    color: #743C00;
+    font-weight: bold;
+    margin-top: 0.7vw;
+}
+
+.IBLine{
+    margin: 0.8vw 0px;
+    height: 2px;
+    background: #333;
+    background-image: linear-gradient(to right, #676767, #000000, #676767);
+}
+
+.IBContent{
+    font-size: 1.5vw;
+    line-height: 2.2vw;
+    margin-top: 2vw;
+    font-weight: bold;
+}
+
+.IntroMap{
+    margin: 0 3vw 0 3vw;
+    padding: 1vw 5vw;
+    background-color: white;
+}
+
+.IMGoogleMap{
+    margin-top: 2vw;
+}
+
+.IMGoToMap{
+    color: black;
+    font-size: 1.3vw;
+    line-height: 1.8vw;
+    font-weight: bold;
+    margin-top: 0.8vw;
+    text-align: center;
+}
+
+.IMGoToMap a{
+    color: black;
+    text-decoration: none;
+}

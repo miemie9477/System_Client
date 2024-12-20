@@ -8,9 +8,15 @@ import { useForm } from 'react-hook-form';
 import { NavLink } from "react-router-dom";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMdArrowDropup } from "react-icons/io";
+import { format } from "date-fns";
 import axios from "axios";
 
 const DoneBody = () => {
+
+    const formatDate = (isoString) => {
+        return format(new Date(isoString), "yyyy-MM-dd HH:mm:ss");
+    };
+
 
     // 表格數據
     var [rows, setRows] = useState([{
@@ -18,7 +24,7 @@ const DoneBody = () => {
         total:"",
         name: "",
         phone:"",
-        time:"",
+        time:"2024-01-01T04:00:00.000Z",
         payState:"",
         orderState:"",
         tRemark:""
@@ -51,7 +57,7 @@ const DoneBody = () => {
                 total: transaction.total,
                 name: transaction.name,
                 phone: transaction.phone,
-                time: transaction.rTime,
+                time: transaction.tTime,
                 payState: transaction.payState,
                 orderState: transaction.tState,
                 tRemark: transaction.tRemark
@@ -132,6 +138,7 @@ const DoneBody = () => {
                 <NavLink to="/AwaitPaymentPage"><button className="DBNotHere">待付款</button></NavLink>
                 <NavLink to="/AwaitDeliveryPage"><button className="DBNotHere">待出餐</button></NavLink>
                 <NavLink to="/DonePage"><button className="DBHere">已完成</button></NavLink>
+                <NavLink to="/CheckMenuPage" style={{marginLeft: "auto"}}><button className="DBSwitchToData">切換到資料表管理</button></NavLink>
             </div>
             
             <table className="DBOrderTable">
@@ -152,7 +159,7 @@ const DoneBody = () => {
                         {/* 正常的表格行 */}
                         <tr>
                             <td>{row.orderNum}</td>
-                            <td>{row.time}</td>
+                            <td>{formatDate(row.time)}</td>
                             <td>{row.name}</td>
                             <td>{row.phone}</td>
                             {/* <td>{row.payState === "已付款" ? (<button className="DBOTRefundSucceedButton" onClick={() => RefundHandler(row.orderNum)}>退款</button>):("已退款")}</td> */}
@@ -169,13 +176,26 @@ const DoneBody = () => {
                             <tr>
                             <td colSpan="7" className="DBOExpandContentTD">
                                 <div className="DBOExpandContent" >
-                                    <div className="DBGoods">香雞排</div>
+                                    {detail
+                                    .filter((pNo) => pNo.orderNum === row.orderNum) // 篩選出 pid 為 row.orderNum 的資料
+                                    .map((pNo, index) => (
+                                        <div key={index}>
+                                            <div className="DBGoods">{pNo.pName}</div>
+                                            <div className="DBSpice">{pNo.rSpicy === 0 ? "不辣" : "要辣"}</div>
+                                            <div className="DBAdjustNum">
+                                                <div className="DBANCalculate">$ {pNo.rTotal / pNo.rAmount} × {pNo.rAmount} =</div>
+                                                <div className="DBANPrice">$ {pNo.rTotal}</div>
+                                            </div>
+                                            <div className="DBGoodsLine"></div>                                            
+                                        </div>
+                                    ))}
+                                    {/* <div className="DBGoods">香雞排</div>
                                     <div className="DBSpice">不辣</div>
                                     <div className="DBAdjustNum">
                                         <div className="DBANCalculate">$ {UnitPrice} × {Cart_num} =</div>
                                         <div className="DBANPrice">$ {Cart_num*UnitPrice}</div>
                                     </div>
-                                    <div className="DBGoodsLine"></div>
+                                    <div className="DBGoodsLine"></div> */}
 
                                     <div className="DBRemark">
                                         <div className="DBRText">訂單備註: </div>
@@ -184,7 +204,7 @@ const DoneBody = () => {
 
                                     <div className="DBSum">
                                         <div className="DBSumTitle">小計</div>
-                                        <div className="DBSumPrice">$ {70}</div>
+                                        <div className="DBSumPrice">$ {row.total}</div>
                                     </div>
                                     <div className="DBDelete"><button className="DBDeleteButton" onClick={() => DeleteHandler(row.orderNum)}>刪除訂單</button></div>
                                 </div>

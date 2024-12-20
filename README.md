@@ -1,31 +1,19 @@
-# 12/18 memo
-1.  *CartPage.js* <br/>
-    [ ] 購物車頁面(*CartBody.js* )已回傳購物車商品，要放上畫面<br/>
-2. *AllOrdersBody.js* <br/>
-    [ ] 把明細放到底下<br/>
-    [ ] 小計(*sum*)要改狀態<br/>
-    > 我把**所有backend底下表格map的部分**，把id改成orderNum<br/>
-3. *AwaitPaymentBody.js*<br/>
-    [ ] 底下明細expandrows要放detail<br/>
-    [ ] 小計(*sum*)要改狀態<br/>
-    [x] **待付款**的訂單，**後端**只會回傳*payState=0 & tState=0*的訂單，所以只要做 encoding就好<br/>
-    > 執行*PaymentHandler()* 重新呼叫一次*getRows()*(從後端提取已修改的*rows*)，畫面重新渲染訂單資料(rows)，不用再改狀態<br/>
-4. *AwaitDeliveryPage.js*<br/>
-    [ ] 底下明細expandrows要放detail<br/>
-    [ ] 小計(*sum*)要改狀態<br/>
-    [x] **待出餐**的訂單，**後端**只會回傳*payState=1 & tState=0*的訂單，所以只要做 encoding就好<br/>
-    > 執行*DeliveryHandler()* 重新呼叫一次*getRows()*(從後端提取已修改的*rows*)，畫面重新渲染訂單資料(rows)，不用再改狀態<br/>
-5. *DonePage.js*<br/>
-    [ ] 底下明細expandrows要放detail<br/>
-    [ ] 小計(*sum*)要改狀態<br/>
-    [x] **待出餐**的訂單，**後端**只會回傳*payState=1 & tState=0*的訂單，所以只要做 encoding就好<br/>
-    > 執行*RefundHandler()* 重新呼叫一次*getRows()*(從後端提取已修改的*rows*)，畫面重新渲染訂單資料(rows)，不用再改狀態
-6. *LoginBox.js* <br/>
-    [ ] 已完成,登入狀態驗證<br/>
-7. 新增 *CheckMember* & *CheckMenu*資料夾，API已寫入(沒debug過)有問題再跟我說<br/>
+# 12/20 memo
+1. 登入後topboxbar後台登入box要改狀態(不要重複登入)
 
 ================<br/>
+# 12/20 memo 給咩
+1.  *CheckMenu.js* <br/>
+   - [ ] 補上修改功能API<br/>
+2. *TransBody.js* <br/>
+   - [ ] 補上交易完成的資料的API<br/>
+3. *CheckMember.js*<br/>
+   - [x] API會一直不停console資料到主控台，造成CPU使用率暴增 **重大問題** <br/>
 
+1.  *LoginBox.js* <br/>
+   - [ ] 頁面RWD化 (下次弄)<br/>    
+*PS 有新Library記得加
+================<br/>
 ## Library
 > React.js
 > React.bootstrap
@@ -34,6 +22,7 @@
 > npm install js-cookie
 > npm install react-hook-form
 > npm install axios
+> npm install date-fns (新增的 用於時間格式化)
 
 <hr>
 

@@ -1,0 +1,146 @@
+.CheckMemberBody{
+    margin: 4vh 5vw 0 5vw;
+}
+
+.CMMBSwitchPage{
+    display: flex;
+}
+
+.CMMBSwitchPage button:active{
+    box-shadow: inset 0.2vw 0.25vw rgba(0, 0, 0, 0.6) !important;
+    transform: translateY(0.1vw); /* 輕微按下效果 */
+}
+
+.CMMBSwitchPage button:not(.CMMBSwitchToOrder){
+    width: 13vw;
+    font-size: 1.6vw;
+    line-height: 1.6vw;
+    color: white;
+    font-weight: bold;
+    border: 0.12vw solid black; 
+    box-shadow: 0 0.35vw 0.5vw -0.2vw rgba(0, 0, 0, 0.6);
+    border-radius: 1vw; 
+    padding: 1vw;
+    margin-right: 1.8vw;
+}
+
+.CMMBHere{
+    background-color: #F4AC6D;
+}
+
+.CMMBNotHere{
+    background-color: #C37939;
+}
+
+.CMMBSwitchToOrder{
+    width: 17vw;
+    font-size: 1.6vw;
+    line-height: 1.6vw;
+    color: white;
+    font-weight: bold;
+    border: 0.12vw solid black; 
+    box-shadow: 0 0.35vw 0.5vw -0.2vw rgba(0, 0, 0, 0.6);
+    border-radius: 1vw; 
+    padding: 1vw;
+    background-color: #C37939;
+}
+
+
+.CMMBTitle{
+    font-size: 2.4vw;
+    line-height: 2.4vw;
+    font-weight: bold;
+    margin-top: 3vw;
+}
+
+.CMMBLine{
+    margin: 1.8vw auto 0 auto;
+    height: 0.15vw;
+    width: 100%;
+    background: #ffffff;
+    background-image: linear-gradient(to right, #939393, #636363, #939393);
+    border-radius: 2vw;
+    text-align: left;
+}
+
+.CMMBMemberTable{
+    margin-top: 1.5vw;
+}
+
+.CheckMemberBody table{
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 5vw; 
+}
+
+
+.CheckMemberBody th:not(.CMMBMTFixButton){
+    font-size: 2.0vw;
+    line-height: 2.0vw;
+    padding: 2vw 0.35vw 1.5vw 0.35vw;
+    text-align: center;
+    vertical-align: middle;
+    border: lightgray solid 0.15vw;
+}
+
+.CheckMemberBody td:not(.CMMBMTFixButton){
+    font-size: 1.8vw;
+    line-height: 1.8vw;
+    padding: 0 0.35vw;
+    text-align: center;
+    vertical-align: middle;
+    border-left: lightgray solid 0.15vw;
+    border-right: lightgray solid 0.15vw;
+    border-bottom: lightgray solid 0.15vw;
+}
+
+.CMMBMTFixButton{
+    font-size: 1.8vw;
+    line-height: 1.8vw;
+    padding: 0 1vw;
+    text-align: center;
+    vertical-align: middle;
+
+}
+
+.CMMBMTAccount{
+    width: 45%;
+}
+
+.CMMBMTPwd{
+    width: 45%;
+}
+
+.CMMBMTFixButton{
+    width: 10%;
+}
+
+
+.CMMBMTFixButton button{
+    border: 0;
+    font-size: 1.8vw;
+    line-height: 1.8vw;
+    background-color: rgb(0, 173, 248);
+    width: 100%;
+    height: 100%;
+    color: white;
+    padding: 1.2vw 0;
+    border-radius: 1vw;
+}
+
+.CheckMemberBody textarea{
+    border: none;
+    outline: none;
+    width: 100%;
+    align-items: center;
+    resize: none;
+    padding: 1vw;
+    text-align: center; /* 水平居中 */
+    overflow: hidden; /* 可选：隐藏滚动条 */
+}
+
+
+.CheckMemberBody textarea:focus{
+    border: none;
+
+}

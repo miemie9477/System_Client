@@ -8,11 +8,16 @@ import { useForm } from 'react-hook-form';
 import { NavLink } from "react-router-dom";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMdArrowDropup } from "react-icons/io";
+import { format } from "date-fns";
 
 import axios from "axios";
 
 
 const AllOrdersBody = () => {
+
+    const formatDate = (isoString) => {
+        return format(new Date(isoString), "yyyy-MM-dd HH:mm:ss");
+    };
 
     // 表格數據
     var [rows, setRows] = useState([{
@@ -20,7 +25,7 @@ const AllOrdersBody = () => {
         total:"",
         name: "",
         phone:"",
-        time:"",
+        time:"2024-01-01T04:00:00.000Z",
         payState:"",
         orderState:"",
         tRemark:""
@@ -47,7 +52,7 @@ const AllOrdersBody = () => {
                     total: item.total,
                     name: item.name,
                     phone: item.phone,
-                    time: item.rTime,
+                    time: item.tTime,
                     payState: item.payState,
                     orderState: item.tState,
                     tRemark: item.tRemark
@@ -95,6 +100,7 @@ const AllOrdersBody = () => {
                 <NavLink to="/AwaitPaymentPage"><button className="AOBNotHere">待付款</button></NavLink>
                 <NavLink to="/AwaitDeliveryPage"><button className="AOBNotHere">待出餐</button></NavLink>
                 <NavLink to="/DonePage"><button className="AOBNotHere">已完成</button></NavLink>
+                <NavLink to="/CheckMenuPage" style={{marginLeft: "auto"}}><button className="AOBSwitchToData">切換到資料表管理</button></NavLink>
             </div>
 
             <table className="AOBOrderTable">
@@ -113,35 +119,48 @@ const AllOrdersBody = () => {
                     {rows.map((row) => (
                         <React.Fragment key={row.orderNum}>
                         {/* 正常的表格行 */}
-                        <tr>
-                            <td>{row.orderNum}</td>
-                            <td>{row.time}</td>
-                            <td>{row.name}</td>
-                            <td>{row.phone}</td>
-                            <td>
-                            {row.payState === 0 ? '未付款' : row.payState === 1 ? '已付款' : '退款'}
-                            </td>
-                            <td>
-                            {row.orderState === 0 ? '未出餐' : '已出餐'}
-                            </td>
-                            <td>
-                            <button className="AOBOTExpandButton" onClick={() => toggleExpand(row.orderNum)}>
-                                {expandedRow === row.orderNum ? (<IoMdArrowDropup style={{ fontSize: "2vw", color: "#F4AC6D" }} />) : (<IoMdArrowDropdown style={{ fontSize: "2vw", color: "#F4AC6D" }} />)}
-                            </button>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>{row.orderNum}</td>
+                                <td>{formatDate(row.time)}</td>
+                                <td>{row.name}</td>
+                                <td>{row.phone}</td>
+                                <td>
+                                    {row.payState === 0 ? '未付款' : row.payState === 1 ? '已付款' : '退款'}
+                                </td>
+                                <td>
+                                    {row.orderState === 0 ? '未出餐' : '已出餐'}    
+                                </td>
+                                <td>
+                                <button className="AOBOTExpandButton" onClick={() => toggleExpand(row.orderNum)}>
+                                    {expandedRow === row.orderNum ? (<IoMdArrowDropup style={{ fontSize: "2vw", color: "#F4AC6D" }} />) : (<IoMdArrowDropdown style={{ fontSize: "2vw", color: "#F4AC6D" }} />)}
+                                </button>
+                                </td>
+                            </tr>
                         {/* 插入的區塊 */}
                         {expandedRow === row.orderNum && (
                             <tr>
                             <td colSpan="7" className="AOBOExpandContentTD">
                                 <div className="AOBOExpandContent" >
-                                    <div className="AOBGoods">香雞排</div>
+                                    {detail
+                                    .filter((pNo) => pNo.orderNum === row.orderNum) // 篩選出 pid 為 row.orderNum 的資料
+                                    .map((pNo, index) => (
+                                        <div key={index}>
+                                            <div className="AOBGoods">{pNo.pName}</div>
+                                            <div className="AOBSpice">{pNo.rSpicy === 0 ? "不辣" : "要辣"}</div>
+                                            <div className="AOBAdjustNum">
+                                                <div className="AOBANCalculate">$ {pNo.rTotal / pNo.rAmount} × {pNo.rAmount} =</div>
+                                                <div className="AOBANPrice">$ {pNo.rTotal}</div>
+                                            </div>
+                                            <div className="AOBGoodsLine"></div>                                            
+                                        </div>
+                                    ))}
+                                    {/* <div className="AOBGoods">香雞排</div>
                                     <div className="AOBSpice">不辣</div>
                                     <div className="AOBAdjustNum">
                                         <div className="AOBANCalculate">$ {UnitPrice} × {Cart_num} =</div>
                                         <div className="AOBANPrice">$ {Cart_num*UnitPrice}</div>
                                     </div>
-                                    <div className="AOBGoodsLine"></div>
+                                    <div className="AOBGoodsLine"></div> */}
 
                                     <div className="AOBRemark">
                                         <div className="AOBRText">訂單備註: {row.tRemark}</div>
@@ -150,7 +169,7 @@ const AllOrdersBody = () => {
 
                                     <div className="AOBSum">
                                         <div className="AOBSumTitle">小計</div>
-                                        <div className="AOBSumPrice">$ {70}</div>
+                                        <div className="AOBSumPrice">$ {row.total}</div>
                                     </div>
                                 </div>
                             </td>

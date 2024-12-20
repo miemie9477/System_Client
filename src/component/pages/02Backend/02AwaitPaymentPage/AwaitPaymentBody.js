@@ -9,7 +9,13 @@ import { NavLink } from "react-router-dom";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMdArrowDropup } from "react-icons/io";
 import axios from "axios";
+import { format } from "date-fns";
+
 const AwaitPaymentBody = () => {
+
+    const formatDate = (isoString) => {
+        return format(new Date(isoString), "yyyy-MM-dd HH:mm:ss");
+    };
 
     // 表格數據
     const [rows, setRows] = useState([{
@@ -17,7 +23,7 @@ const AwaitPaymentBody = () => {
         total:"",
         name: "",
         phone:"",
-        time:"",
+        time:"2024-01-01T04:00:00.000Z",
         payState:"",
         orderState:"",
         tRemark:""
@@ -43,7 +49,7 @@ const AwaitPaymentBody = () => {
                 total: transaction.total,
                 name: transaction.name,
                 phone: transaction.phone,
-                time: transaction.rTime,
+                time: transaction.tTime,
                 payState: transaction.payState,
                 orderState: transaction.tState,
                 tRemark: transaction.tRemark
@@ -120,6 +126,7 @@ const AwaitPaymentBody = () => {
                 <NavLink to="/AwaitPaymentPage"><button className="APBHere">待付款</button></NavLink>
                 <NavLink to="/AwaitDeliveryPage"><button className="APBNotHere">待出餐</button></NavLink>
                 <NavLink to="/DonePage"><button className="APBNotHere">已完成</button></NavLink>
+                <NavLink to="/CheckMenuPage" style={{marginLeft: "auto"}}><button className="APBSwitchToData">切換到資料表管理</button></NavLink>
             </div>
             
             <table className="APBOrderTable">
@@ -140,7 +147,7 @@ const AwaitPaymentBody = () => {
                         {/* 正常的表格行 */}
                         <tr>
                             <td>{row.orderNum}</td>
-                            <td>{row.time}</td>
+                            <td>{formatDate(row.time)}</td>
                             <td>{row.name}</td>
                             <td>{row.phone}</td>
                             {/* <td>{row.payState === 0 ? (<button className="APBOTPaymentSucceedButton" onClick={() => PaymentHandler(row.orderNum)}>付款</button>):("已付款")}</td> */}
@@ -157,13 +164,26 @@ const AwaitPaymentBody = () => {
                             <tr>
                             <td colSpan="7" className="APBOExpandContentTD">
                                 <div className="APBOExpandContent" >
-                                    <div className="APBGoods">香雞排</div>
+                                    {detail
+                                    .filter((pNo) => pNo.orderNum === row.orderNum) // 篩選出 pid 為 row.orderNum 的資料
+                                    .map((pNo, index) => (
+                                        <div key={index}>
+                                            <div className="APBGoods">{pNo.pName}</div>
+                                            <div className="APBSpice">{pNo.rSpicy === 0 ? "不辣" : "要辣"}</div>
+                                            <div className="APBAdjustNum">
+                                                <div className="APBANCalculate">$ {pNo.rTotal / pNo.rAmount} × {pNo.rAmount} =</div>
+                                                <div className="APBANPrice">$ {pNo.rTotal}</div>
+                                            </div>
+                                            <div className="APBGoodsLine"></div>                                            
+                                        </div>
+                                    ))}
+                                    {/* <div className="APBGoods">香雞排</div>
                                     <div className="APBSpice">不辣</div>
                                     <div className="APBAdjustNum">
                                         <div className="APBANCalculate">$ {UnitPrice} × {Cart_num} =</div>
                                         <div className="APBANPrice">$ {Cart_num*UnitPrice}</div>
                                     </div>
-                                    <div className="APBGoodsLine"></div>
+                                    <div className="APBGoodsLine"></div> */}
 
                                     <div className="APBRemark">
                                         <div className="APBRText">訂單備註: </div>
@@ -172,7 +192,7 @@ const AwaitPaymentBody = () => {
 
                                     <div className="APBSum">
                                         <div className="APBSumTitle">小計</div>
-                                        <div className="APBSumPrice">$ {70}</div>
+                                        <div className="APBSumPrice">$ {row.total}</div>
                                     </div>
 
                                     <div className="APBDelete"><button className="APBDeleteButton" onClick={() => DeleteHandler(row.orderNum)}>刪除訂單</button></div>

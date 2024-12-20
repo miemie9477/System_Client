@@ -11,7 +11,7 @@
     transform: translateY(0.1vw); /* 輕微按下效果 */
 }
 
-.ADBSwitchPage button{
+.ADBSwitchPage button:not(.ADBSwitchToData){
     width: 10vw;
     font-size: 1.6vw;
     line-height: 1.6vw;
@@ -31,6 +31,20 @@
 .ADBNotHere{
     background-color: #C37939;
 }
+
+.ADBSwitchToData{
+    width: 20vw;
+    font-size: 1.6vw;
+    line-height: 1.6vw;
+    color: white;
+    font-weight: bold;
+    border: 0.12vw solid black; 
+    box-shadow: 0 0.35vw 0.5vw -0.2vw rgba(0, 0, 0, 0.6);
+    border-radius: 1vw; 
+    padding: 1vw;
+    background-color: #C37939;
+}
+
 
 
 .ADBGoods{

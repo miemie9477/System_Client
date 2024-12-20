@@ -9,9 +9,14 @@ import { NavLink } from "react-router-dom";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMdArrowDropup } from "react-icons/io";
 import axios from "axios";
-
+import { format } from "date-fns";
 
 const AwaitDeliveryBody = () => {
+
+    const formatDate = (isoString) => {
+        return format(new Date(isoString), "yyyy-MM-dd HH:mm:ss");
+    };
+
 
     // 表格數據
     const [rows, setRows] = useState([{
@@ -19,7 +24,7 @@ const AwaitDeliveryBody = () => {
             total:"",
             name: "",
             phone:"",
-            time:"",
+            time:"2024-01-01T04:00:00.000Z",
             payState:"",
             orderState:"",
             tRemark:""
@@ -43,7 +48,7 @@ const AwaitDeliveryBody = () => {
                 total: transaction.total,
                 name: transaction.name,
                 phone: transaction.phone,
-                time: transaction.rTime,
+                time: transaction.tTime,
                 payState: transaction.payState,
                 orderState: transaction.tState,
                 tRemark: transaction.tRemark
@@ -124,6 +129,7 @@ const AwaitDeliveryBody = () => {
                 <NavLink to="/AwaitPaymentPage"><button className="ADBNotHere">待付款</button></NavLink>
                 <NavLink to="/AwaitDeliveryPage"><button className="ADBHere">待出餐</button></NavLink>
                 <NavLink to="/DonePage"><button className="ADBNotHere">已完成</button></NavLink>
+                <NavLink to="/CheckMenuPage" style={{marginLeft: "auto"}}><button className="ADBSwitchToData">切換到資料表管理</button></NavLink>
             </div>
             
             <table className="ADBOrderTable">
@@ -144,7 +150,7 @@ const AwaitDeliveryBody = () => {
                         {/* 正常的表格行 */}
                         <tr>
                             <td>{row.orderNum}</td>
-                            <td>{row.time}</td>
+                            <td>{formatDate(row.time)}</td>
                             <td>{row.name}</td>
                             <td>{row.phone}</td>
                             <td>{row.payState === 0 ? '未付款' : row.payState === 1 ? '已付款' : '退款'}</td>
@@ -161,13 +167,26 @@ const AwaitDeliveryBody = () => {
                             <tr>
                             <td colSpan="7" className="ADBOExpandContentTD">
                                 <div className="ADBOExpandContent" >
-                                    <div className="ADBGoods">香雞排</div>
+                                    {detail
+                                    .filter((pNo) => pNo.orderNum === row.orderNum) // 篩選出 pid 為 row.orderNum 的資料
+                                    .map((pNo, index) => (
+                                        <div key={index}>
+                                            <div className="ADBGoods">{pNo.pName}</div>
+                                            <div className="ADBSpice">{pNo.rSpicy === 0 ? "不辣" : "要辣"}</div>
+                                            <div className="ADBAdjustNum">
+                                                <div className="ADBANCalculate">$ {pNo.rTotal / pNo.rAmount} × {pNo.rAmount} =</div>
+                                                <div className="ADBANPrice">$ {pNo.rTotal}</div>
+                                            </div>
+                                            <div className="ADBGoodsLine"></div>                                            
+                                        </div>
+                                    ))}
+                                    {/* <div className="ADBGoods">香雞排</div>
                                     <div className="ADBSpice">不辣</div>
                                     <div className="ADBAdjustNum">
                                         <div className="ADBANCalculate">$ {UnitPrice} × {Cart_num} =</div>
                                         <div className="ADBANPrice">$ {Cart_num*UnitPrice}</div>
                                     </div>
-                                    <div className="ADBGoodsLine"></div>
+                                    <div className="ADBGoodsLine"></div> */}
 
                                     <div className="ADBRemark">
                                         <div className="ADBRText">訂單備註: </div>
@@ -176,7 +195,7 @@ const AwaitDeliveryBody = () => {
 
                                     <div className="ADBSum">
                                         <div className="ADBSumTitle">小計</div>
-                                        <div className="ADBSumPrice">$ {70}</div>
+                                        <div className="ADBSumPrice">$ {row.total}</div>
                                     </div>
 
                                     <div className="ADBDelete"><button className="ADBDeleteButton" onClick={() => DeleteHandler(row.orderNum)}>刪除訂單</button></div>

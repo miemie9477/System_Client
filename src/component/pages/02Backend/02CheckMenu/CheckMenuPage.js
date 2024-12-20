@@ -1,18 +1,16 @@
-
-
-import Frame from "../../BasicFrame/frame";
-import IntroBody from "./TransBody";
+import Frame from "../../../BasicFrame/frame";
+import CheckMenu from "./CheckMenu";
 
 const FixStyle = {
     position: "relative"
 }
 
-const TransPage = () => {
+const CheckMenuPage = () => {
     return(
         <div style={FixStyle}>
             <Frame/>
             
-            <IntroBody/>
+            <CheckMenu/>
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
         </div>
@@ -20,4 +18,4 @@ const TransPage = () => {
 }
   
 
-export default TransPage
+export default CheckMenuPage

@@ -28,7 +28,7 @@ const TopBarText = () => {
                         
                     </div>
                     <div className="RightCss">
-                        <NavLink to="/IntroductionPage">店家資訊</NavLink> 
+                        <NavLink to="/IntroPage">店家資訊</NavLink> 
                         
                     </div>
                     <div className="RightCss">

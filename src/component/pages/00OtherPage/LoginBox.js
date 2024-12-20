@@ -5,14 +5,17 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useContext } from 'react';
+import { LoginContext } from "../../../ContextAPI";
 
 
 const LoginBox = () =>{
-
+    const { login, setLogin } = useContext(LoginContext);
     
     const navigate = useNavigate();
 
     const { register, handleSubmit, setError, formState: { errors } } = useForm();
+    
     
 
     const onSubmit = (data) => {
@@ -30,6 +33,7 @@ const LoginBox = () =>{
                 if(response.data.length > 0){
                     alert('管理員登入');
                     navigate('/AllOrdersPage')
+                    setLogin(1);
                 }
                 else{
                     setError("inputPassword",{type:"custom", message:"帳號或密碼錯誤"})

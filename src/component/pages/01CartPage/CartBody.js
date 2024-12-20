@@ -51,7 +51,7 @@ const CartBody = () => {
                 setCartItem(cartItems); // 將處理好的陣列存入狀態
                 if(response.data.length < 1){
                     alert("購物車為空!");
-                    navigate('/');
+                    // navigate('/');
                 }
             }
         )
@@ -82,31 +82,96 @@ const CartBody = () => {
     
     console.log("最新的 CartItem:", CartItem);
 
-    const [Cart_num, setCart_num] = useState(1);
+    // const [Cart_num, setCart_num] = useState(1);
 
-    const Cart_Minus = (pNo , unitPrice) =>{
-        if(Cart_num>1) {
-            setCart_num(Cart_num - 1);
-            const info={
-                pNo: pNo,
-                amount: Cart_num,
-                cTotal: Cart_num * unitPrice
-            }
-            modifyAmount(info);
-        }
-        else setCart_num(1)
-    }
+    // const Cart_Minus = (pNo) => {
+    //     setCartItem((prevCart) => 
+    //         prevCart.map(item => 
+    //             item.pNo === pNo && item.amount > 1
+    //                 ? {
+    //                     ...item,
+    //                     amount: item.amount - 1,
+    //                     cTotal: (item.amount - 1) * item.unitPrice,
+    //                 }
+    //                 : item
+    //         )
+    //     );
+    // };
+    
+    // const Cart_Add = (pNo) => {
+    //     setCartItem((prevCart) => 
+    //         prevCart.map(item => 
+    //             item.pNo === pNo
+    //                 ? {
+    //                     ...item,
+    //                     amount: item.amount + 1,
+    //                     cTotal: (item.amount + 1) * item.unitPrice,
+    //                 }
+    //                 : item
+    //         )
+    //     );
+    // };
 
-    const Cart_Add = (pNo, unitPrice) =>{
-        setCart_num(Cart_num + 1)
-        const info={
-            pNo: pNo,
-            amount: Cart_num,
-            cTotal: Cart_num * unitPrice
-        }
-        modifyAmount(info);
-        
-    }
+    const Cart_Minus = (pNo) => {
+        setCartItem((prevCart) => {
+            // 找到要修改的商品
+            const updatedCart = prevCart.map(item => {
+                if (item.pNo === pNo && item.amount > 1) {
+                    const newAmount = item.amount - 1;
+                    const updatedItem = {
+                        ...item,
+                        amount: newAmount,
+                        cTotal: newAmount * item.unitPrice,
+                    };
+    
+                    // 同步伺服器
+                    modifyAmount({
+                        pNo: updatedItem.pNo,
+                        amount: updatedItem.amount,
+                        cTotal: updatedItem.cTotal,
+                    });
+    
+                    return updatedItem;
+                }
+                return item;
+            });
+    
+            return updatedCart;
+        });
+    };
+
+    const Cart_Add = (pNo) => {
+        setCartItem((prevCart) => {
+            // 找到要修改的商品
+            const updatedCart = prevCart.map(item => {
+                if (item.pNo === pNo) {
+                    const newAmount = item.amount + 1;
+                    const updatedItem = {
+                        ...item,
+                        amount: newAmount,
+                        cTotal: newAmount * item.unitPrice,
+                    };
+    
+                    // 同步伺服器
+                    modifyAmount({
+                        pNo: updatedItem.pNo,
+                        amount: updatedItem.amount,
+                        cTotal: updatedItem.cTotal,
+                    });
+    
+                    return updatedItem;
+                }
+                return item;
+            });
+    
+            return updatedCart;
+        });
+    };
+
+    const calculateTotalPrice = () => {
+        return CartItem.reduce((total, item) => total + item.cTotal, 0);
+    };
+    
 
 
     const Discard = (pNo) =>{
@@ -121,7 +186,7 @@ const CartBody = () => {
         )
     }
 
-    const [UnitPrice, setUnitPrice] = useState(70);
+    // const [UnitPrice, setUnitPrice] = useState(70);
 
 
     const { register, handleSubmit, watch, setError, formState: { errors } } = useForm({
@@ -148,7 +213,22 @@ const CartBody = () => {
                     <div className="CDTitle">購物車資訊</div>
                     <div className="CDTitleLine"></div>
                     
-                    <div className="CDGoods">香雞排</div>
+                    {CartItem.map((tId, index) => (
+                    <div key={index}>
+                        <div className="CDGoods">{tId.pName}</div>
+                        <div className="CDSpice">{tId.cSpicy === 0 ? "不辣" : "要辣"}</div>
+                            <div className="CDAdjustNum">
+                                <div className="CDANCrashcan"><button onClick={Discard}><FaTrashCan className="CDANCrashcanIcon"/></button></div>
+                                <div className="CDANMinus"><button onClick={() => Cart_Minus(tId.pNo)}>−</button></div>
+                                <div className="CDANNum">{tId.amount}</div>
+                                <div className="CDANPlus"><button onClick={() => Cart_Add(tId.pNo)}>+</button></div>
+                                <div className="CDANPrice">$ {tId.amount*tId.unitPrice}</div>
+                            </div>
+                        <div className="CDGoodsLine"></div>
+                    </div>
+                    ))}                
+
+                    {/* <div className="CDGoods">香雞排</div>
                     <div className="CDSpice">不辣</div>
                         <div className="CDAdjustNum">
                             <div className="CDANCrashcan"><button onClick={Discard}><FaTrashCan className="CDANCrashcanIcon"/></button></div>
@@ -157,10 +237,10 @@ const CartBody = () => {
                             <div className="CDANPlus"><button onClick={Cart_Add}>+</button></div>
                             <div className="CDANPrice">$ {Cart_num*UnitPrice}</div>
                         </div>
-                    <div className="CDGoodsLine"></div>
+                    <div className="CDGoodsLine"></div> */}
                     <div className="CDSum">
                         <div className="CDSumTitle">小計</div>
-                        <div className="CDSumPrice">$ {70}</div>
+                        <div className="CDSumPrice">$ {calculateTotalPrice()}</div>
                     </div>
                     <div className="CDRemarkTitle">訂單備註</div>
                     <div className="CDRemark">
@@ -187,7 +267,7 @@ const CartBody = () => {
                 </div>
             
                 <div>
-                    <button className='CartSubmit' type="submit">總計 $ {70}，送出訂單</button>
+                    <button className='CartSubmit' type="submit">總計 $ {calculateTotalPrice()}，送出訂單</button>
                 </div>
             
            </form>
