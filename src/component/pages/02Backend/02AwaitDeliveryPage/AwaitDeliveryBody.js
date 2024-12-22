@@ -78,13 +78,8 @@ const AwaitDeliveryBody = () => {
     
     // 處理按鈕點擊
     const DeliveryHandler = (orderNum) => {
-    //     setRows((prevRows) =>
-    //         prevRows.map((row) =>
-    //             row.orderNum === orderNum ? { ...row, orderState: "已出餐" } : row
-    //         )
-    //     );
-    // };
-        const deliveryUrl = `${process.env.REACT_APP_API_URL}/act/delivery`;
+    //     
+        const deliveryUrl = `${process.env.REACT_APP_API_URL}/act/deliver`;
         axios.post(deliveryUrl, {orderNum})
         .then(
             response =>{

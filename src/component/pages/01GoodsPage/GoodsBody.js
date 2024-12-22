@@ -7,9 +7,10 @@ import { NavLink } from "react-router-dom";
 import axios from 'axios';
 
 const GoodsBody = ({pNo}) => {
+    
 
     const navigate = useNavigate();
-
+    var [productAmount, setProductAmount] = useState();
     const [Mer_num, setMer_num] = useState(1);
     const Mer_Minus = () =>{
         if(Mer_num>1) setMer_num(Mer_num - 1)
@@ -19,7 +20,7 @@ const GoodsBody = ({pNo}) => {
         setMer_num(Mer_num + 1)
     }
 
-    const [Spice, setSpice] = useState("0");
+    const [Spice, setSpice] = useState(0);
     const Spice_handleChange = (event) => {
         setSpice(event.target.value); // 更新选中的值
     };
@@ -29,26 +30,33 @@ const GoodsBody = ({pNo}) => {
     var [Intro, setIntro] = useState("");
 
     const AddtoCart = async() =>{
-        console.log(`Mer_num: ${Mer_num}`);
-        info.amount = Mer_num;
-        info.cTotal = Mer_num*Price;
-        info.cSpicy = Spice;
-
-        const checkCart = `${process.env.REACT_APP_API_URL}/setCookie/createTId`;
-        const checkCartResponse = await axios.get(checkCart,{ withCredentials: true });
-        console.log(checkCartResponse.data);
-
-        console.log("send req:")
-        console.log(info);
-        const url = `${process.env.REACT_APP_API_URL}/cart/addCart`;
-        axios.post(url, info, {withCredentials: true})
-        .then(
-            response =>{
-                console.log("response",response)
-            }
-        )
-        alert(`${Mer_num}份${info.pName} 已加入購物車`)
-        navigate('/#');
+        if(productAmount >= Mer_num){
+            console.log(`Mer_num: ${Mer_num}`);
+            info.amount = Mer_num;
+            info.cTotal = Mer_num*Price;
+            info.cSpicy = Spice;
+    
+            const checkCart = `${process.env.REACT_APP_API_URL}/setCookie/createTId`;
+            const checkCartResponse = await axios.get(checkCart,{ withCredentials: true });
+            console.log(checkCartResponse.data);
+    
+            console.log("send req:")
+            console.log(info);
+            const url = `${process.env.REACT_APP_API_URL}/cart/addCart`;
+            axios.post(url, info, {withCredentials: true})
+            .then(
+                response =>{
+                    console.log("response",response)
+                }
+            )
+            alert(`${Mer_num}份${info.pName} 已加入購物車`)
+            navigate('/#');
+        }
+        else{
+            console.log(`Mer_num: ${Mer_num}\npAmount:${productAmount}` )
+            alert("庫存不足，請選購其他商品");
+            navigate('/#');
+        }
     }
 
 
@@ -66,7 +74,8 @@ const GoodsBody = ({pNo}) => {
         axios.post(url, {pNo},{ withCredentials: true })
         .then(
             response =>{
-                console.log(response.data);
+                console.log(response.data[0].pAmount);
+                setProductAmount(response.data[0].pAmount);
                 setInfo({
                     pNo,
                     pName:response.data[0].pName,

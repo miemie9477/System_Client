@@ -7,51 +7,57 @@ import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { useForm } from 'react-hook-form';
 import { NavLink } from "react-router-dom";
 import axios from "axios";
+import { format } from 'date-fns';
 
-var fetchCartData;
+var fetchData;
 
 const TransBody = () => {
 
-    var [CartItem, setCartItem] = useState({});
+    var [recordItem, setRecordItem] = useState([{}]);
+    const rId = document.cookie.rId;
+    var [trans, setTrans] = useState({});
 
-    // useEffect(() =>{
-    //     fetchCartData();
-    // }, [])
-    // console.log("最新的 CartItem:", CartItem);
-    
-    // fetchCartData = async ()=>{
-    //     const url = `${process.env.REACT_APP_API_URL}/cart/checkCart`;
-    //     await axios.get(url, {withCredentials: true})
-    //     .then(
-    //         response =>{
-    //             console.log(response.data);
-    //             setCartItem(response.data);
-    //         }
-    //     )
-    //     .catch(
-    //         error =>{
-    //             console.log(error);
-    //         }
-    //     )
-    // };
+    useEffect(() =>{
+        fetchData();
+    }, [])
 
-    // const Discard = () =>{
-    //     const url = `${process.env.REACT_APP_API_URL}/cart/discard`
+    console.log("最新的 recordItem:", recordItem);
+    const formattedTime = trans.tTime ? format(new Date(trans.tTime), "yyyy-MM-dd HH:mm:ss"): trans.tTime;;
 
-    //     axios.post(url, CartItem.pNo)
-    //     .then(
-    //         response =>{
-    //             console.log(response);
-    //             fetchCartData();
-    //         }
-    //     )
-    // }
-    const [Cart_num, setCart_num] = useState(1);
+    fetchData = async ()=>{
+        const viewTrans = `${process.env.REACT_APP_API_URL}/cart/viewTrans`;
+        const viewTransResponse = await axios.get(viewTrans,{ withCredentials: true });
+        console.log("trans res:", viewTransResponse.data[0]);
+        setTrans(viewTransResponse.data[0]);
+        const url = `${process.env.REACT_APP_API_URL}/cart/viewRecord`;
+        await axios.get(url, {withCredentials: true})
+        .then(
+            response => {
+                console.log(response.data);
 
-    const [UnitPrice, setUnitPrice] = useState(70);
-
-    
-    
+                const Item = response.data.map(item => ({
+                    rId: item.rId,
+                    pNo: item.pNo,
+                    pName: item.pName,
+                    rAmount: item.rAmount,
+                    rTotal: item.rTotal,
+                    rSpicy: item.rSpicy,
+                    unitPrice: item.rTotal / item.rAmount, // 計算單價
+                }));
+            
+                setRecordItem(Item); // 將處理好的陣列存入狀態
+                if(response.data.length < 1){
+                    alert("購物車為空!");
+                    // navigate('/');
+                }
+            }
+        )
+        .catch(
+            error =>{
+                console.log(error);
+            }
+        )
+    };
 
     return(
         <div className="TransBody">
@@ -62,30 +68,55 @@ const TransBody = () => {
                     
                     <div className="TDOrderNum">
                         <div className="TDONText">訂單編號: </div>
-                        <div className="TDONNum">A0000000</div>
+                        <div className="TDONNum">{trans.rId}</div>
                     </div>
                     <div className="TDOrderSentTime">
                         <div className="TDOSTText">送單時間: </div>
-                        <div className="TDOSTTime">2024-11-06  15:30</div>
+                        <div className="TDOSTTime">{formattedTime}</div>
                     </div>
 
                     <div className="TDTitleLine"></div>
-                    <div className="TDGoods">香雞排</div>
+                    <div>
+                    {/* <div className="TDGoods">香雞排</div>
                     <div className="TDSpice">不辣</div>
                     <div className="TDAdjustNum">
                         <div className="TDANCalculate">$ {UnitPrice} × {Cart_num} =</div>
                         <div className="TDANPrice">$ {Cart_num*UnitPrice}</div>
                     </div>
-                    <div className="TDGoodsLine"></div>
+                    <div className="TDGoodsLine"></div> */}
+                    
+                    </div>
+                    {recordItem.map((item, index) => (
+                        <div key={index} className="record-container">
+                        {/* 商品名稱 */}
+                        <div className="TDGoods">{item.pName}</div>
+
+                        {/* 辣度 */}
+                        <div className="TDSpice">
+                            {item.rSpicy === 0 ? "不辣" : item.rSpicy === 1 ? "小辣" : "中辣"}
+                        </div>
+
+                        {/* 數量與價格 */}
+                        <div className="TDAdjustNum">
+                            <div className="TDANCalculate">
+                            $ {item.unitPrice} × {item.rAmount} =
+                            </div>
+                            <div className="TDANPrice">$ {item.rTotal}</div>
+                        </div>
+
+                        {/* 分隔線 */}
+                        <div className="TDGoodsLine"></div>
+                        </div>
+                    ))}
 
                     <div className="TDRemark">
                         <div className="TDRText">訂單備註: </div>
-                        <div className="TDRDetail">不要塑膠袋</div>
+                        <div className="TDRDetail">{trans.tRemark}</div>
                     </div>
 
                     <div className="TDSum">
                         <div className="TDSumTitle">小計</div>
-                        <div className="TDSumPrice">$ {70}</div>
+                        <div className="TDSumPrice">$ {trans.total}</div>
                     </div>
                     
                 </div>
@@ -94,8 +125,8 @@ const TransBody = () => {
                 <div className="TransOrdererDetail">
                     <div className="TODTitle">訂購人資訊*</div>
                     <div className="TODLine"></div>
-                    <div className="TODName"><input type="text" name="TODName" id="TODName" value="王大明" readonly/></div>
-                    <div className="TODPhone"><input type="text" name="TODPhone" id="TODPhone" value="0900000000" readonly/></div>
+                    <div className="TODName"><input type="text" name="TODName" id="TODName" value={trans.name} readonly/></div>
+                    <div className="TODPhone"><input type="text" name="TODPhone" id="TODPhone" value={trans.phone} readonly/></div>
                     
                 </div>
             

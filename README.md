@@ -1,18 +1,14 @@
-# 12/20 memo
-1. 登入後topboxbar後台登入box要改狀態(不要重複登入)
-
-================<br/>
-# 12/20 memo 給咩
-1.  *CheckMenu.js* <br/>
-   - [ ] 補上修改功能API<br/>
-2. *TransBody.js* <br/>
-   - [ ] 補上交易完成的資料的API<br/>
-3. *CheckMember.js*<br/>
-   - [x] API會一直不停console資料到主控台，造成CPU使用率暴增 **重大問題** <br/>
-
+# 12/22 memo 給飄
+0. - [ ]登入後topboxbar後台登入box要改狀態(不要重複登入)
 1.  *LoginBox.js* <br/>
-   - [ ] 頁面RWD化 (下次弄)<br/>    
-*PS 有新Library記得加
+    - [ ] 頁面RWD化 (下次弄)<br/> 
+2.  *CheckMemberPage.js*<br/>   
+    - [ ] 刪除按鈕css幫我調
+3.  上雲端，網址做成qrcode
+4. 載sql
+> 我大致demo過了，基本上應該沒什麼問題，我禮拜一早上回彰化下午1.-3.有課
+
+
 ================<br/>
 ## Library
 > React.js

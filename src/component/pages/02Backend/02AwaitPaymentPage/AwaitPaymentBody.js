@@ -187,7 +187,7 @@ const AwaitPaymentBody = () => {
 
                                     <div className="APBRemark">
                                         <div className="APBRText">訂單備註: </div>
-                                        <div className="APBRDetail">不要塑膠袋</div>
+                                        <div className="APBRDetail">{row.tRemark}</div>
                                     </div>
 
                                     <div className="APBSum">

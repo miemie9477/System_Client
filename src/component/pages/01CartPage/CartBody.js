@@ -82,102 +82,38 @@ const CartBody = () => {
     
     console.log("最新的 CartItem:", CartItem);
 
-    // const [Cart_num, setCart_num] = useState(1);
+    const Cart_Add = (pNo, amount, unitPrice) =>{
+        const info={
+            pNo: pNo,
+            amount: amount + 1,
+            cTotal: (amount + 1) * unitPrice
+        }
+        console.log("send:", info);
+        modifyAmount(info);
+    }
 
-    // const Cart_Minus = (pNo) => {
-    //     setCartItem((prevCart) => 
-    //         prevCart.map(item => 
-    //             item.pNo === pNo && item.amount > 1
-    //                 ? {
-    //                     ...item,
-    //                     amount: item.amount - 1,
-    //                     cTotal: (item.amount - 1) * item.unitPrice,
-    //                 }
-    //                 : item
-    //         )
-    //     );
-    // };
-    
-    // const Cart_Add = (pNo) => {
-    //     setCartItem((prevCart) => 
-    //         prevCart.map(item => 
-    //             item.pNo === pNo
-    //                 ? {
-    //                     ...item,
-    //                     amount: item.amount + 1,
-    //                     cTotal: (item.amount + 1) * item.unitPrice,
-    //                 }
-    //                 : item
-    //         )
-    //     );
-    // };
-
-    const Cart_Minus = (pNo) => {
-        setCartItem((prevCart) => {
-            // 找到要修改的商品
-            const updatedCart = prevCart.map(item => {
-                if (item.pNo === pNo && item.amount > 1) {
-                    const newAmount = item.amount - 1;
-                    const updatedItem = {
-                        ...item,
-                        amount: newAmount,
-                        cTotal: newAmount * item.unitPrice,
-                    };
-    
-                    // 同步伺服器
-                    modifyAmount({
-                        pNo: updatedItem.pNo,
-                        amount: updatedItem.amount,
-                        cTotal: updatedItem.cTotal,
-                    });
-    
-                    return updatedItem;
-                }
-                return item;
-            });
-    
-            return updatedCart;
-        });
-    };
-
-    const Cart_Add = (pNo) => {
-        setCartItem((prevCart) => {
-            // 找到要修改的商品
-            const updatedCart = prevCart.map(item => {
-                if (item.pNo === pNo) {
-                    const newAmount = item.amount + 1;
-                    const updatedItem = {
-                        ...item,
-                        amount: newAmount,
-                        cTotal: newAmount * item.unitPrice,
-                    };
-    
-                    // 同步伺服器
-                    modifyAmount({
-                        pNo: updatedItem.pNo,
-                        amount: updatedItem.amount,
-                        cTotal: updatedItem.cTotal,
-                    });
-    
-                    return updatedItem;
-                }
-                return item;
-            });
-    
-            return updatedCart;
-        });
-    };
+    const Cart_Minus = (pNo, amount, unitPrice) =>{
+        if(amount - 1 > 0){
+            const info={
+                pNo: pNo,
+                amount: amount - 1,
+                cTotal: (amount - 1) * unitPrice
+            }
+            console.log("send:", info);
+            modifyAmount(info);
+        }
+    }
 
     const calculateTotalPrice = () => {
         return CartItem.reduce((total, item) => total + item.cTotal, 0);
     };
-    
 
 
     const Discard = (pNo) =>{
+        console.log("pNo:", pNo);
         const url = `${process.env.REACT_APP_API_URL}/cart/discard`
 
-        axios.post(url, pNo)
+        axios.post(url, [pNo], {withCredentials:true})
         .then(
             response =>{
                 console.log(response);
@@ -186,18 +122,45 @@ const CartBody = () => {
         )
     }
 
-    // const [UnitPrice, setUnitPrice] = useState(70);
-
 
     const { register, handleSubmit, watch, setError, formState: { errors } } = useForm({
         mode:"onSubmit",
         reValidateMode:"onBlur",
     });
 
-    const onSubmit = (data) => {
-        const total = CartItem.reduce((sum, item) => sum + item.cTotal, 0);
-        console.log("總金額:", total); 
-        navigate('/CartPage/TransPage')
+    const onSubmit = async (data) => {
+        
+        console.log(data);
+        const total = await calculateTotalPrice();
+        const name = data.CODName;
+        const phone = data.CODPhone
+        const payState = 0;
+        const tState = 0;
+        const tRemark = data.CDRemark;
+        const transUrl = `${process.env.REACT_APP_API_URL}/cart/sendTrans`
+        try{
+            const transResponse = await axios.post(transUrl, {total, name, phone, payState, tState, tRemark}, {withCredentials: true})
+            console.log("get trans:", transResponse);
+        }
+        catch(error){
+            console.log(error);
+            throw error;
+        }
+
+        const sendRecord = `${process.env.REACT_APP_API_URL}/cart/sendRecord`;
+        axios.post(sendRecord, CartItem, {withCredentials:true})
+        .then(
+            response =>{
+                if(response){
+                    navigate('/CartPage/TransPage')
+                }
+            }
+        )
+        .catch(
+            error =>{
+                console.log(error);
+            }
+        )
         
     }
     
@@ -218,10 +181,10 @@ const CartBody = () => {
                         <div className="CDGoods">{tId.pName}</div>
                         <div className="CDSpice">{tId.cSpicy === 0 ? "不辣" : "要辣"}</div>
                             <div className="CDAdjustNum">
-                                <div className="CDANCrashcan"><button onClick={Discard}><FaTrashCan className="CDANCrashcanIcon"/></button></div>
-                                <div className="CDANMinus"><button onClick={() => Cart_Minus(tId.pNo)}>−</button></div>
+                                <div className="CDANCrashcan"><button type="button" onClick={() => Discard(tId.pNo)}><FaTrashCan className="CDANCrashcanIcon"/></button></div>
+                                <div className="CDANMinus"><button type="button" onClick={() => Cart_Minus(tId.pNo, tId.amount, tId.unitPrice)}>−</button></div>
                                 <div className="CDANNum">{tId.amount}</div>
-                                <div className="CDANPlus"><button onClick={() => Cart_Add(tId.pNo)}>+</button></div>
+                                <div className="CDANPlus"><button type="button" onClick={() => Cart_Add(tId.pNo, tId.amount, tId.unitPrice)}>+</button></div>
                                 <div className="CDANPrice">$ {tId.amount*tId.unitPrice}</div>
                             </div>
                         <div className="CDGoodsLine"></div>

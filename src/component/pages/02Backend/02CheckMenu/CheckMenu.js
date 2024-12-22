@@ -15,21 +15,30 @@ const CheckMenu = () =>{
 
     });
 
-    const onSubmit = (data) => {
-        
-        // const url = "http://localhost:3001/modifyAdminSide/modifyMember"
-        // axios.post(url, {mId, mName, pId, email, gender, phone, birthday, mAccount, mPwd})
-        // .then(
-        //     response =>{
-        //         if(response.data.result === "success"){
-        //             console.log("驗證成功",data);
-        //             alert(`已修改會員資料${mId}`);       
-        //         }
-        //     }
-        // )
-        
-        
-    }
+    const onSubmit = (data, pNo) => {
+        // 提取表單數據
+        const updatedData = {
+            pNo,
+            pName: data[`CMBMTName-${pNo}`],
+            pIntroduction: data[`CMBMTIntro-${pNo}`],
+            unitPrice: data[`CMBMTPrice-${pNo}`],
+            pAmount: data[`CMBMTInventory-${pNo}`],
+        };
+    
+        console.log("更新的商品資料:", updatedData);
+    
+        const url = `${process.env.REACT_APP_API_URL}/act/modifyProduct`
+        axios.post(url, updatedData)
+            .then(
+                response => {
+                    if(response){
+                        alert("修改成功");
+                        console.log(response)
+                    }
+                }
+        )
+            .catch(error => console.error(error));
+    };
 
     useEffect(() =>{
         const check = async () =>{
@@ -73,7 +82,7 @@ const CheckMenu = () =>{
                 {productInfo.map((Info, index) => (
                     <tr key={Info.pNo}>
                         <td colSpan={6} className="CMBMTInsideTD" style={{padding:"0"}}>
-                        <form name="CMBMTForm" onSubmit={handleSubmit(onSubmit)}>
+                        <form name="CMBMTForm" onSubmit={handleSubmit((data) => onSubmit(data, Info.pNo))}>
                             <td className="CMBMTNum">
                                 <textarea
                                     name={`CMBMTNum-${Info.pNo}`}
