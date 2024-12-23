@@ -52,15 +52,15 @@ const LoginBox = () =>{
     return(
         <div className="loginBoxCss">
             <div className="loginContent">
-                <div style={{fontSize:"18px", margin:"40px"}}>後台登入<br/></div>
+                <div className="LCTitle">後台登入</div>
                 <form name="login" onSubmit={handleSubmit(onSubmit)}>
                     <div className="loginForm">
-                        <b>帳號</b> 
+                        <div className="LCInputTitle">帳號</div> 
                         <input type="account" id="inputAccount" 
                         {...register("inputAccount", {required: true, maxLength: {value: 10, message: "帳號過長"}})} />
                         {!!errors.inputAccount && <p>{errors.inputAccount.message.toString() || "請輸入帳號"}</p> }
 
-                        <b>密碼</b>
+                        <div className="LCInputTitle">密碼</div>
                         <input type="password" id="inputPassword" 
                         {...register("inputPassword", {required: true})} />
                         {!!errors.inputPassword && <p>{errors.inputPassword.message.toString() || "請輸入密碼"}</p> }

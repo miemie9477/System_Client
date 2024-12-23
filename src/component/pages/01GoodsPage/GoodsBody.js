@@ -22,7 +22,7 @@ const GoodsBody = ({pNo}) => {
 
     const [Spice, setSpice] = useState(0);
     const Spice_handleChange = (event) => {
-        setSpice(event.target.value); // 更新选中的值
+        setSpice(Number(event.target.value)); // 更新选中的值
     };
 
     var [info, setInfo] = useState({});
@@ -61,7 +61,7 @@ const GoodsBody = ({pNo}) => {
 
 
     useEffect(() =>{
-        setSpice("0")
+        setSpice(0)
 
         setInfo({pNo,
             pName:"",
@@ -122,8 +122,8 @@ const GoodsBody = ({pNo}) => {
                 <div className='GBSpiceTitle'>辣度</div>
                 <div className='GBSpiceLine'></div>
                 <div className='GBSpiceChoice'>
-                    <div className='GBSChoiceYes'><input type="radio" name="Spice" id="Spice" value="0" className='square-radio' checked={Spice === "0"}  onChange={Spice_handleChange}/>不辣</div>
-                    <div className='GBSChoiceNo'><input type="radio" name="Spice" id="Spice" value="1" className='square-radio' checked={Spice === "1"} onChange={Spice_handleChange}/>要辣</div>
+                    <div className='GBSChoiceYes'><input type="radio" name="Spice" id="Spice" value={0} className='square-radio' checked={Spice === 0}  onChange={Spice_handleChange}/>不辣</div>
+                    <div className='GBSChoiceNo'><input type="radio" name="Spice" id="Spice" value={1} className='square-radio' checked={Spice === 1} onChange={Spice_handleChange}/>要辣</div>
                 </div>
             </div>
 

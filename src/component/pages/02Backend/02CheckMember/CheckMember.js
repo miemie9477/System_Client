@@ -116,20 +116,20 @@ const CheckMember = () =>{
                     <tbody>
                         <tr>
                             <td className="CMMBMTAccount">
-                                <input type="text"
+                                <textarea type="text"
                                     name={`CMMBMTAccount`}
                                     id={`CMMBMTAccount`}
                                     {...registerModify(`CMMBMTAccount`, { required: true })}
                                     rows="1"
-                                ></input>
+                                ></textarea>
                             </td>
                             <td className="CMMBMTPwd">
-                                <input type="text"
+                                <textarea type="text"
                                     name={`CMMBMTPwd`}
                                     id={`CMMBMTPwd`}
                                     {...registerModify(`CMMBMTPwd`, { required: true })}
                                     rows="1"
-                                ></input>
+                                ></textarea>
                             </td>
                             <td className="CMMBMTFixButton"><button type="submit">新增</button></td>
 
@@ -148,7 +148,8 @@ const CheckMember = () =>{
                         <tr>
                             <th className="CMMBMTAccount">帳號</th>
                             <th className="CMMBMTPwd">密碼</th>
-                            <th className="CMMBMTFixButton"></th> 
+                            <th className="CMMBMTFixButton"></th>
+                            <th className="CMMBMTDeleteButton"></th>  
                         </tr>
                     </thead>
                     <tbody>
@@ -184,7 +185,7 @@ const CheckMember = () =>{
                                     }>修改
                                 </button>
                             </td>
-                            <td className="CMMBMTFixButton0">
+                            <td className="CMMBMTDeleteButton">
                                 <button
                                     type="button"
                                     onClick={() => handleDelete(Info.account)}>刪除

@@ -33,6 +33,7 @@ const CartBody = () => {
         const checkCartResponse = await axios.get(checkCart,{ withCredentials: true });
         console.log(checkCartResponse.data);
         
+        
         const url = `${process.env.REACT_APP_API_URL}/cart/checkCart`;
         await axios.get(url, {withCredentials: true})
         .then(

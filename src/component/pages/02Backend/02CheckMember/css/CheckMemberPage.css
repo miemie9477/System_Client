@@ -74,7 +74,7 @@
 }
 
 
-.CheckMemberBody th:not(.CMMBMTFixButton){
+.CheckMemberBody th:not(.CMMBMTFixButton):not(.CMMBMTDeleteButton){
     font-size: 2.0vw;
     line-height: 2.0vw;
     padding: 2vw 0.35vw 1.5vw 0.35vw;
@@ -83,7 +83,7 @@
     border: lightgray solid 0.15vw;
 }
 
-.CheckMemberBody td:not(.CMMBMTFixButton){
+.CheckMemberBody td:not(.CMMBMTFixButton):not(.CMMBMTDeleteButton){
     font-size: 1.8vw;
     line-height: 1.8vw;
     padding: 0 0.35vw;
@@ -97,28 +97,32 @@
 .CMMBMTFixButton{
     font-size: 1.8vw;
     line-height: 1.8vw;
-    padding: 0 1vw;
+    padding: 0.3vw 1vw;
     text-align: center;
     vertical-align: middle;
 }
-.CMMBMTFixButton0{
-    display: flex;
+.CMMBMTDeleteButton{
+
     font-size: 1.8vw;
     line-height: 1.8vw;
-    padding: 0 1vw;
+    padding: 0.3vw 1vw;
     text-align: center;
     vertical-align: middle;
 }
 
 .CMMBMTAccount{
-    width: 45%;
+    width: 40%;
 }
 
 .CMMBMTPwd{
-    width: 45%;
+    width: 40%;
 }
 
 .CMMBMTFixButton{
+    width: 10%;
+}
+
+.CMMBMTDeleteButton{
     width: 10%;
 }
 
@@ -134,7 +138,7 @@
     padding: 1.2vw 0;
     border-radius: 1vw;
 }
-.CMMBMTFixButton0 button{
+.CMMBMTDeleteButton button{
     border: 0;
     font-size: 1.8vw;
     line-height: 1.8vw;

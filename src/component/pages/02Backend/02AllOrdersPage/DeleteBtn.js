@@ -60,9 +60,9 @@ const DeleteBtn = () =>{
 
     return(
         <div className="AllOrdersBody">
-            <div className="AOBSwitchPage">
-                <button className="AOBNotHere" onClick={CleanCart}>Clean Cart AND CartDetail</button>
-                <button className="AOBNotHere" onClick={CleanTrans}>Clean Transaction AND Record</button>
+            <div className="AOBCleanOption">
+                <button className="AOBCOCart" onClick={CleanCart}>清理 Cart & CartDetail 資料</button>
+                <button className="AOBCOTrans" onClick={CleanTrans}>清理 Transaction & Record 資料</button>
             </div>
 
         </div>
