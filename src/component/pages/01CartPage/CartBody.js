@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 
+
 var fetchCartData, modifyAmount;
 
 const CartBody = () => {
@@ -18,7 +19,7 @@ const CartBody = () => {
         pNo: "",
         pName: "",
         amount: "",
-        cSpicy: "",
+        cSpicy: null,
         cTotal: "",
         unitPrice:""
     }]);
@@ -27,15 +28,25 @@ const CartBody = () => {
         fetchCartData();
     }, [])
     
-    
+    function getCookie(name) {
+        const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        if (match) {
+            return match[2];
+        }
+        return null; // 如果沒找到該 cookie，則返回 null
+    }
+
     fetchCartData = async ()=>{
-        const checkCart = `${process.env.REACT_APP_API_URL}/setCookie/createTId`;
-        const checkCartResponse = await axios.get(checkCart,{ withCredentials: true });
-        console.log(checkCartResponse.data);
-        
+        let tId = getCookie('tId');
+        console.log("tId:", tId);
+        if(tId === null){
+            const checkCart = `${process.env.REACT_APP_API_URL}/setCookie/createTId`;
+            const checkCartResponse = await axios.get(checkCart,{ withCredentials: true });
+            console.log(checkCartResponse.data);
+        }
         
         const url = `${process.env.REACT_APP_API_URL}/cart/checkCart`;
-        await axios.get(url, {withCredentials: true})
+        await axios.post(url, {tId}, {withCredentials: true})
         .then(
             response => {
                 console.log(response.data);
@@ -52,7 +63,7 @@ const CartBody = () => {
                 setCartItem(cartItems); // 將處理好的陣列存入狀態
                 if(response.data.length < 1){
                     alert("購物車為空!");
-                    // navigate('/');
+                    navigate('/');
                 }
             }
         )
@@ -85,6 +96,7 @@ const CartBody = () => {
 
     const Cart_Add = (pNo, amount, unitPrice) =>{
         const info={
+            tId: getCookie('tId'),
             pNo: pNo,
             amount: amount + 1,
             cTotal: (amount + 1) * unitPrice
@@ -96,6 +108,7 @@ const CartBody = () => {
     const Cart_Minus = (pNo, amount, unitPrice) =>{
         if(amount - 1 > 0){
             const info={
+                tId: getCookie('tId'),
                 pNo: pNo,
                 amount: amount - 1,
                 cTotal: (amount - 1) * unitPrice
@@ -111,10 +124,11 @@ const CartBody = () => {
 
 
     const Discard = (pNo) =>{
+        let tId= getCookie('tId');
         console.log("pNo:", pNo);
         const url = `${process.env.REACT_APP_API_URL}/cart/discard`
 
-        axios.post(url, [pNo], {withCredentials:true})
+        axios.post(url,{ pNo, tId}, {withCredentials:true})
         .then(
             response =>{
                 console.log(response);
@@ -130,8 +144,11 @@ const CartBody = () => {
     });
 
     const onSubmit = async (data) => {
-        
+        if(getCookie('rId')){
+            document.cookie = "rId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
         console.log(data);
+        const tId = getCookie('tId');
         const total = await calculateTotalPrice();
         const name = data.CODName;
         const phone = data.CODPhone
@@ -140,16 +157,17 @@ const CartBody = () => {
         const tRemark = data.CDRemark;
         const transUrl = `${process.env.REACT_APP_API_URL}/cart/sendTrans`
         try{
-            const transResponse = await axios.post(transUrl, {total, name, phone, payState, tState, tRemark}, {withCredentials: true})
+            const transResponse = await axios.post(transUrl, {tId, total, name, phone, payState, tState, tRemark}, {withCredentials: true})
             console.log("get trans:", transResponse);
         }
         catch(error){
             console.log(error);
             throw error;
         }
-
+        const rId = getCookie('rId');
+        console.log("CartItem:", CartItem);
         const sendRecord = `${process.env.REACT_APP_API_URL}/cart/sendRecord`;
-        axios.post(sendRecord, CartItem, {withCredentials:true})
+        axios.post(sendRecord, {CartItem, rId, tId}, {withCredentials:true})
         .then(
             response =>{
                 if(response){
@@ -180,7 +198,7 @@ const CartBody = () => {
                     {CartItem.map((tId, index) => (
                     <div key={index}>
                         <div className="CDGoods">{tId.pName}</div>
-                        <div className="CDSpice">{tId.cSpicy === 0 ? "不辣" : "要辣"}</div>
+                        <div className="CDSpice">{tId.cSpicy === null ? "" : (tId.cSpicy === 0 ? "不辣" : "要辣")}</div>
                             <div className="CDAdjustNum">
                                 <div className="CDANCrashcan"><button type="button" onClick={() => Discard(tId.pNo)}><FaTrashCan className="CDANCrashcanIcon"/></button></div>
                                 <div className="CDANMinus"><button type="button" onClick={() => Cart_Minus(tId.pNo, tId.amount, tId.unitPrice)}>−</button></div>

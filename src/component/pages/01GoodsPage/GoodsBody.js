@@ -35,11 +35,15 @@ const GoodsBody = ({pNo}) => {
             info.amount = Mer_num;
             info.cTotal = Mer_num*Price;
             info.cSpicy = Spice;
-    
-            const checkCart = `${process.env.REACT_APP_API_URL}/setCookie/createTId`;
-            const checkCartResponse = await axios.get(checkCart,{ withCredentials: true });
-            console.log(checkCartResponse.data);
-    
+            
+            
+            const tId = getCookie('tId');
+            if(tId === null){
+                const checkCart = `${process.env.REACT_APP_API_URL}/setCookie/createTId`;
+                const checkCartResponse = await axios.get(checkCart,{ withCredentials: true });
+                console.log(checkCartResponse.data);
+            }
+            
             console.log("send req:")
             console.log(info);
             const url = `${process.env.REACT_APP_API_URL}/cart/addCart`;
@@ -59,6 +63,13 @@ const GoodsBody = ({pNo}) => {
         }
     }
 
+    function getCookie(name) {
+        const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        if (match) {
+            return match[2];
+        }
+        return null; // 如果沒找到該 cookie，則返回 null
+    }
 
     useEffect(() =>{
         setSpice(0)
@@ -67,7 +78,8 @@ const GoodsBody = ({pNo}) => {
             pName:"",
             amount:"",
             cTotal:"",
-            cSpicy:""
+            cSpicy:"",
+            tId:""
         })
         
         const url = `${process.env.REACT_APP_API_URL}/menu/loadGood`;
@@ -76,7 +88,10 @@ const GoodsBody = ({pNo}) => {
             response =>{
                 console.log(response.data[0].pAmount);
                 setProductAmount(response.data[0].pAmount);
+                const tId = getCookie('tId');
+                console.log('tId:', tId);
                 setInfo({
+                    tId: tId,
                     pNo,
                     pName:response.data[0].pName,
                     amount:Mer_num,
@@ -84,8 +99,8 @@ const GoodsBody = ({pNo}) => {
                     cSpicy:Spice
                 });
                 setPrice(response.data[0].unitPrice);
-                console.log(info);
                 setIntro(response.data[0].pIntroduction)
+                
             }
         )
         .catch(

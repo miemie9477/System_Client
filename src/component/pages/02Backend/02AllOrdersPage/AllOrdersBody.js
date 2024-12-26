@@ -163,8 +163,8 @@ const AllOrdersBody = () => {
                                     <div className="AOBGoodsLine"></div> */}
 
                                     <div className="AOBRemark">
-                                        <div className="AOBRText">訂單備註: {row.tRemark}</div>
-                                        <div className="AOBRDetail"></div>
+                                        <div className="AOBRText">訂單備註: </div>
+                                        <div className="AOBRDetail">{row.tRemark}</div>
                                     </div>
 
                                     <div className="AOBSum">

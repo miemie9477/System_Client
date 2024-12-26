@@ -15,16 +15,18 @@ const MenuItems = ({pNo}) => {
     useEffect(() =>{
         const check = async () =>{
             try{
-                const checkCart = `${process.env.REACT_APP_API_URL}/setCookie/createTId`;
-                const checkCartResponse = await axios.get(checkCart,{ withCredentials: true });
-                console.log(checkCartResponse.data);
+                const tId = getCookie('tId');
+                if(tId === null){
+                    const checkCart = `${process.env.REACT_APP_API_URL}/setCookie/createTId`;
+                    const checkCartResponse = await axios.get(checkCart,{ withCredentials: true });
+                    console.log(checkCartResponse.data);
+                }
+                console.log('tId:', tId);
 
                 const url = `${process.env.REACT_APP_API_URL}/menu/loadMenu`;
                 const menuResponse = await axios.get(url, { withCredentials: true })
                 console.log("get menu:" , menuResponse.data)
                 setProductInfo(menuResponse.data);
-                const tId = getCookie('tId');
-                console.log('tId:', tId);
                 
             }
             catch(error){

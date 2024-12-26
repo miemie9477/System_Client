@@ -199,7 +199,7 @@ const DoneBody = () => {
 
                                     <div className="DBRemark">
                                         <div className="DBRText">訂單備註: </div>
-                                        <div className="DBRDetail">不要塑膠袋</div>
+                                        <div className="DBRDetail">{row.tRemark}</div>
                                     </div>
 
                                     <div className="DBSum">

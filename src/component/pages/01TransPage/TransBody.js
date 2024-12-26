@@ -14,8 +14,16 @@ var fetchData;
 const TransBody = () => {
 
     var [recordItem, setRecordItem] = useState([{}]);
-    const rId = document.cookie.rId;
+    const rId = getCookie('rId');
     var [trans, setTrans] = useState({});
+
+    function getCookie(name) {
+        const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        if (match) {
+            return match[2];
+        }
+        return null; // 如果沒找到該 cookie，則返回 null
+    }
 
     useEffect(() =>{
         fetchData();
@@ -26,11 +34,11 @@ const TransBody = () => {
 
     fetchData = async ()=>{
         const viewTrans = `${process.env.REACT_APP_API_URL}/cart/viewTrans`;
-        const viewTransResponse = await axios.get(viewTrans,{ withCredentials: true });
+        const viewTransResponse = await axios.post(viewTrans, {rId},{ withCredentials: true });
         console.log("trans res:", viewTransResponse.data[0]);
         setTrans(viewTransResponse.data[0]);
         const url = `${process.env.REACT_APP_API_URL}/cart/viewRecord`;
-        await axios.get(url, {withCredentials: true})
+        await axios.post(url, {rId}, {withCredentials: true})
         .then(
             response => {
                 console.log(response.data);

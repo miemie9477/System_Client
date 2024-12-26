@@ -185,7 +185,7 @@ const AwaitDeliveryBody = () => {
 
                                     <div className="ADBRemark">
                                         <div className="ADBRText">訂單備註: </div>
-                                        <div className="ADBRDetail">不要塑膠袋</div>
+                                        <div className="ADBRDetail">{row.tRemark}</div>
                                     </div>
 
                                     <div className="ADBSum">

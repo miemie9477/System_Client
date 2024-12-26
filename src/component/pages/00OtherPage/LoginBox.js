@@ -57,7 +57,7 @@ const LoginBox = () =>{
                     <div className="loginForm">
                         <div className="LCInputTitle">帳號</div> 
                         <input type="account" id="inputAccount" 
-                        {...register("inputAccount", {required: true, maxLength: {value: 10, message: "帳號過長"}})} />
+                        {...register("inputAccount", {required: true})} />
                         {!!errors.inputAccount && <p>{errors.inputAccount.message.toString() || "請輸入帳號"}</p> }
 
                         <div className="LCInputTitle">密碼</div>
